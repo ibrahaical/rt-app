@@ -20,6 +20,17 @@ const BillsPage = () => {
     fetchBills();
   }, []);
 
+  const currentMonth = new Date().getMonth() + 1;
+  const currentYear = new Date().getFullYear();
+
+  const thisMonthBills = bills.filter(b => parseInt(b.period_month) === currentMonth && parseInt(b.period_year) === currentYear);
+  const totalBillsThisMonth = thisMonthBills.length;
+  const paidBillsThisMonth = thisMonthBills.filter(b => b.status === 'lunas').length;
+  const unpaidBillsThisMonth = totalBillsThisMonth - paidBillsThisMonth;
+  
+  const unpaidOverall = bills.filter(b => b.status !== 'lunas');
+  const totalAmountUnpaid = unpaidOverall.reduce((sum, b) => sum + parseInt(b.amount || 0), 0);
+
   const { items: sortedBills, requestSort, sortConfig } = useSortableData(bills, { key: 'house.house_number', direction: 'ascending' });
 
   const getSortIcon = (key) => {
@@ -112,6 +123,39 @@ const BillsPage = () => {
             "Generate Tagihan"
           )}
         </button>
+      </div>
+
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-gray-500">Progres Bulan Ini</p>
+            <p className="text-2xl font-bold text-gray-900 mt-1">{paidBillsThisMonth} / {totalBillsThisMonth} <span className="text-sm font-normal text-gray-500">Lunas</span></p>
+          </div>
+          <div className="p-3 bg-emerald-50 rounded-lg">
+            <svg className="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          </div>
+        </div>
+        
+        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-gray-500">Tunggakan (Semua Waktu)</p>
+            <p className="text-2xl font-bold text-rose-600 mt-1">{unpaidOverall.length} <span className="text-sm font-normal text-rose-500">Tagihan</span></p>
+          </div>
+          <div className="p-3 bg-rose-50 rounded-lg">
+            <svg className="w-6 h-6 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          </div>
+        </div>
+
+        <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-gray-500">Total Piutang Warga</p>
+            <p className="text-2xl font-bold text-orange-600 mt-1">Rp {totalAmountUnpaid.toLocaleString('id-ID')}</p>
+          </div>
+          <div className="p-3 bg-orange-50 rounded-lg">
+            <svg className="w-6 h-6 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          </div>
+        </div>
       </div>
 
       <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">

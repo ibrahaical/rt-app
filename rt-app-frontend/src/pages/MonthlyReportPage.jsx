@@ -5,6 +5,7 @@ const MonthlyReportPage = () => {
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(new Date().getFullYear());
   const [reportData, setReportData] = useState({ incomes: [], expenses: [] });
+  const [activeTab, setActiveTab] = useState('pemasukan');
 
   const fetchReport = async () => {
     try {
@@ -60,91 +61,117 @@ const MonthlyReportPage = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Tabs Navigasi */}
+      <div className="flex border-b border-gray-200">
+        <button
+          className={`py-3 px-6 text-sm font-medium border-b-2 transition-colors ${
+            activeTab === 'pemasukan' 
+              ? 'border-blue-600 text-blue-600' 
+              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+          }`}
+          onClick={() => setActiveTab('pemasukan')}
+        >
+          Pemasukan (Rp {totalIncome.toLocaleString('id-ID')})
+        </button>
+        <button
+          className={`py-3 px-6 text-sm font-medium border-b-2 transition-colors ${
+            activeTab === 'pengeluaran' 
+              ? 'border-rose-600 text-rose-600' 
+              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+          }`}
+          onClick={() => setActiveTab('pengeluaran')}
+        >
+          Pengeluaran (Rp {totalExpense.toLocaleString('id-ID')})
+        </button>
+      </div>
+
+      <div>
         {/* Kolom Pemasukan */}
-        <div className="space-y-4">
-          <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 bg-blue-50 flex justify-between items-center">
-              <h3 className="text-lg font-semibold text-blue-900">Daftar Pemasukan (Iuran)</h3>
-              <span className="font-bold text-blue-700">{formatRp(totalIncome)}</span>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-white">
-                  <tr>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sumber</th>
-                    <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Nominal</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {reportData.incomes.length === 0 ? (
+        {activeTab === 'pemasukan' && (
+          <div className="space-y-4">
+            <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-200 bg-blue-50 flex justify-between items-center">
+                <h3 className="text-lg font-semibold text-blue-900">Daftar Pemasukan (Iuran)</h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-white">
                     <tr>
-                      <td colSpan="3" className="px-6 py-8 text-center text-sm text-gray-500">Tidak ada pemasukan bulan ini.</td>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sumber</th>
+                      <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Nominal</th>
                     </tr>
-                  ) : (
-                    reportData.incomes.map((inc) => (
-                      <tr key={inc.id} className="hover:bg-gray-50 transition-colors">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {new Date(inc.paid_at).toLocaleDateString('id-ID')}
-                        </td>
-                        <td className="px-6 py-4 text-sm text-gray-900">
-                          <div className="font-medium">{inc.resident?.name || 'Anonim'}</div>
-                          <div className="text-gray-500 text-xs">Rumah: {inc.house?.house_number || '-'}</div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-blue-600 text-right">
-                          {formatRp(inc.total_amount)}
-                        </td>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {reportData.incomes.length === 0 ? (
+                      <tr>
+                        <td colSpan="3" className="px-6 py-8 text-center text-sm text-gray-500">Tidak ada pemasukan bulan ini.</td>
                       </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
+                    ) : (
+                      reportData.incomes.map((inc) => (
+                        <tr key={inc.id} className="hover:bg-gray-50 transition-colors">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {new Date(inc.paid_at).toLocaleDateString('id-ID')}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-gray-900">
+                            <div className="font-medium">{inc.resident?.name || 'Anonim'}</div>
+                            <div className="text-gray-500 text-xs">Rumah: {inc.house?.house_number || '-'}</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-blue-600 text-right">
+                            {formatRp(inc.total_amount)}
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Kolom Pengeluaran */}
-        <div className="space-y-4">
-          <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 bg-rose-50 flex justify-between items-center">
-              <h3 className="text-lg font-semibold text-rose-900">Daftar Pengeluaran</h3>
-              <span className="font-bold text-rose-700">{formatRp(totalExpense)}</span>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-white">
-                  <tr>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Keterangan</th>
-                    <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Nominal</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {reportData.expenses.length === 0 ? (
+        {activeTab === 'pengeluaran' && (
+          <div className="space-y-4">
+            <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-200 bg-rose-50 flex justify-between items-center">
+                <h3 className="text-lg font-semibold text-rose-900">Daftar Pengeluaran</h3>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-white">
                     <tr>
-                      <td colSpan="3" className="px-6 py-8 text-center text-sm text-gray-500">Tidak ada pengeluaran bulan ini.</td>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Keterangan</th>
+                      <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Nominal</th>
                     </tr>
-                  ) : (
-                    reportData.expenses.map((exp) => (
-                      <tr key={exp.id} className="hover:bg-gray-50 transition-colors">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {new Date(exp.expense_date).toLocaleDateString('id-ID')}
-                        </td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                          {exp.title}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-rose-600 text-right">
-                          {formatRp(exp.amount)}
-                        </td>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {reportData.expenses.length === 0 ? (
+                      <tr>
+                        <td colSpan="3" className="px-6 py-8 text-center text-sm text-gray-500">Tidak ada pengeluaran bulan ini.</td>
                       </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
+                    ) : (
+                      reportData.expenses.map((exp) => (
+                        <tr key={exp.id} className="hover:bg-gray-50 transition-colors">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {new Date(exp.expense_date).toLocaleDateString('id-ID')}
+                          </td>
+                          <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                            {exp.title}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-rose-600 text-right">
+                            {formatRp(exp.amount)}
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

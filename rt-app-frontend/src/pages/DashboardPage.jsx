@@ -14,19 +14,19 @@ import {
 const DashboardPage = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [chartData, setChartData] = useState([]);
-  const currentMonth = new Date().getMonth() + 1;
-  const currentYear = new Date().getFullYear();
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
         const dashRes = await api.get(
-          `/dashboard?month=${currentMonth}&year=${currentYear}`,
+          `/dashboard?month=${selectedMonth}&year=${selectedYear}`,
         );
         setDashboardData(dashRes.data);
 
         const chartRes = await api.get(
-          `/reports/yearly-chart?year=${currentYear}`,
+          `/reports/yearly-chart?year=${selectedYear}`,
         );
         setChartData(chartRes.data);
       } catch (error) {
@@ -34,7 +34,7 @@ const DashboardPage = () => {
       }
     };
     fetchDashboard();
-  }, [currentMonth, currentYear]);
+  }, [selectedMonth, selectedYear]);
 
   if (!dashboardData) return (
     <div className="flex flex-col items-center justify-center h-64">
@@ -50,9 +50,36 @@ const DashboardPage = () => {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900">Dashboard SmartRT</h2>
-        <p className="text-gray-600">Ringkasan data dan keuangan pada tahun {currentYear}</p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900">Dashboard SmartRT</h2>
+          <p className="text-gray-600 mt-1">Ringkasan data dan keuangan RT.</p>
+        </div>
+        
+        <div className="flex items-center gap-3 bg-white p-2 rounded-lg shadow-sm border border-gray-200">
+          <div className="flex items-center">
+            <span className="text-sm font-medium text-gray-500 mr-2">Bulan:</span>
+            <select
+              value={selectedMonth}
+              onChange={(e) => setSelectedMonth(e.target.value)}
+              className="px-3 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-primary-500 focus:border-primary-500"
+            >
+              {Array.from({ length: 12 }, (_, i) => i + 1).map(m => (
+                <option key={m} value={m}>{new Date(2000, m - 1, 1).toLocaleString('id-ID', { month: 'long' })}</option>
+              ))}
+            </select>
+          </div>
+          <div className="w-px h-6 bg-gray-300"></div>
+          <div className="flex items-center">
+            <span className="text-sm font-medium text-gray-500 mr-2">Tahun:</span>
+            <input
+              type="number"
+              value={selectedYear}
+              onChange={(e) => setSelectedYear(e.target.value)}
+              className="w-20 px-3 py-1.5 border border-gray-300 rounded-md text-sm focus:ring-primary-500 focus:border-primary-500"
+            />
+          </div>
+        </div>
       </div>
 
       {/* Kartu Ringkasan */}
@@ -125,7 +152,7 @@ const DashboardPage = () => {
 
       {/* Grafik Tahunan */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-6">Grafik Keuangan Tahun {currentYear}</h3>
+        <h3 className="text-lg font-bold text-gray-900 mb-6">Grafik Keuangan Tahun {selectedYear}</h3>
         <div className="w-full h-80">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
