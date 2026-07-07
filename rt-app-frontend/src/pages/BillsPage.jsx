@@ -24,15 +24,33 @@ const BillsPage = () => {
     try {
       // Hit POST /bills/generate sesuai instruksi
       const response = await api.post("/bills/generate");
-      Swal.fire(
-        "Selesai!",
-        `${response.data.created} tagihan baru dibuat, ${response.data.skipped} dilewati/sudah ada.`,
-        "success"
-      );
+      
+      let message = "";
+      if (response.data.created > 0 && response.data.skipped === 0) {
+        message = `Berhasil membuat ${response.data.created} tagihan baru untuk warga bulan ini.`;
+      } else if (response.data.created > 0 && response.data.skipped > 0) {
+        message = `Berhasil membuat ${response.data.created} tagihan baru. Terdapat ${response.data.skipped} tagihan yang dilewati karena sudah pernah dibuat sebelumnya.`;
+      } else if (response.data.created === 0 && response.data.skipped > 0) {
+        message = `Tidak ada tagihan baru yang dibuat. Semua warga yang menempati rumah (sebanyak ${response.data.skipped} tagihan) sudah memiliki tagihan bulan ini.`;
+      } else {
+        message = "Tidak ada rumah yang sedang dihuni, sehingga tidak ada tagihan yang perlu dibuat.";
+      }
+
+      Swal.fire({
+        title: "Selesai Memproses",
+        text: message,
+        icon: "success",
+        confirmButtonText: "Baik, Terima Kasih"
+      });
       fetchBills(); // Refresh tabel tagihan
     } catch (error) {
       console.error("Error generating bills:", error);
-      Swal.fire("Gagal!", "Gagal men-generate tagihan.", "error");
+      Swal.fire({
+        title: "Terjadi Kesalahan",
+        text: "Sistem gagal membuat tagihan. Mohon coba beberapa saat lagi.",
+        icon: "error",
+        confirmButtonText: "Tutup"
+      });
     } finally {
       setIsGenerating(false);
     }

@@ -26,12 +26,22 @@ const ExpensesPage = () => {
     e.preventDefault();
     try {
       await api.post("/expenses", formData);
-      Swal.fire("Sukses!", "Pengeluaran berhasil dicatat!", "success");
+      Swal.fire({
+        title: "Catatan Disimpan",
+        text: "Pengeluaran kas RT telah berhasil dicatat.",
+        icon: "success",
+        confirmButtonText: "Selesai"
+      });
       setFormData({ title: "", amount: "", expense_date: "", description: "" });
       fetchExpenses();
     } catch (error) {
       console.error(error);
-      Swal.fire("Gagal!", "Gagal menyimpan pengeluaran.", "error");
+      Swal.fire({
+        title: "Gagal Disimpan",
+        text: "Maaf, terjadi kesalahan saat menyimpan pengeluaran. Mohon coba lagi.",
+        icon: "error",
+        confirmButtonText: "Tutup"
+      });
     }
   };
 

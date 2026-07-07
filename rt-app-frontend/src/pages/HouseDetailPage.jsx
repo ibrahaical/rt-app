@@ -32,7 +32,12 @@ const HouseDetailPage = () => {
     e.preventDefault();
     try {
       await api.post(`/houses/${id}/assign-resident`, assignForm);
-      Swal.fire("Sukses!", "Penghuni berhasil ditempatkan!", "success");
+      Swal.fire({
+        title: "Penghuni Ditempatkan",
+        text: "Warga yang dipilih sekarang resmi menempati rumah ini.",
+        icon: "success",
+        confirmButtonText: "Baik"
+      });
       setAssignForm({
         resident_id: "",
         start_date: new Date().toISOString().split("T")[0],
@@ -40,19 +45,24 @@ const HouseDetailPage = () => {
       fetchData();
     } catch (error) {
       console.error("Error assigning resident:", error);
-      Swal.fire("Gagal!", "Gagal menempatkan penghuni.", "error");
+      Swal.fire({
+        title: "Gagal Menempatkan",
+        text: "Maaf, terjadi kesalahan saat menempatkan penghuni.",
+        icon: "error",
+        confirmButtonText: "Tutup"
+      });
     }
   };
 
   const handleRemove = async () => {
     const result = await Swal.fire({
       title: "Keluarkan Penghuni?",
-      text: "Yakin ingin mengeluarkan penghuni ini?",
+      text: "Apakah Anda yakin warga ini sudah tidak lagi menempati rumah ini? Riwayat sebelumnya akan tetap tersimpan.",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#e11d48",
       cancelButtonColor: "#9ca3af",
-      confirmButtonText: "Ya, Keluarkan!",
+      confirmButtonText: "Ya, Warga Sudah Pindah",
       cancelButtonText: "Batal"
     });
 
@@ -62,11 +72,21 @@ const HouseDetailPage = () => {
       await api.post(`/houses/${id}/remove-resident`, {
         end_date: new Date().toISOString().split("T")[0],
       });
-      Swal.fire("Berhasil!", "Penghuni berhasil dikeluarkan.", "success");
+      Swal.fire({
+        title: "Penghuni Dikeluarkan",
+        text: "Warga tersebut telah dipindahkan dari rumah ini.",
+        icon: "success",
+        confirmButtonText: "Selesai"
+      });
       fetchData();
     } catch (error) {
       console.error("Error removing resident:", error);
-      Swal.fire("Gagal!", "Terjadi kesalahan saat mengeluarkan penghuni.", "error");
+      Swal.fire({
+        title: "Gagal Diproses",
+        text: "Terjadi kesalahan saat mengeluarkan penghuni.",
+        icon: "error",
+        confirmButtonText: "Tutup"
+      });
     }
   };
 

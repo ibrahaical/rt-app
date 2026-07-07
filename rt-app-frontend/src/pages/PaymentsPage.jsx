@@ -35,7 +35,14 @@ const PaymentsPage = () => {
 
   const handlePayment = async (e) => {
     e.preventDefault();
-    if (selectedBills.length === 0) return Swal.fire("Perhatian", "Pilih minimal 1 tagihan!", "warning");
+    if (selectedBills.length === 0) {
+      return Swal.fire({
+        title: "Pilih Tagihan",
+        text: "Mohon centang setidaknya satu tagihan yang ingin dibayar terlebih dahulu.",
+        icon: "warning",
+        confirmButtonText: "Mengerti"
+      });
+    }
 
     // Ambil house_id dari tagihan pertama yang dipilih (asumsi 1 warga 1 rumah aktif)
     const firstSelectedBill = unpaidBills.find(
@@ -49,13 +56,23 @@ const PaymentsPage = () => {
         bill_ids: selectedBills,
         notes: "Pembayaran Iuran Kolektif",
       });
-      Swal.fire("Sukses!", "Pembayaran berhasil!", "success");
+      Swal.fire({
+        title: "Pembayaran Diterima",
+        text: "Terima kasih, pembayaran iuran berhasil dicatat dan sudah masuk ke kas RT.",
+        icon: "success",
+        confirmButtonText: "Selesai"
+      });
       setSelectedResident("");
       setUnpaidBills([]);
       setSelectedBills([]);
     } catch (error) {
       console.error(error);
-      Swal.fire("Gagal!", "Pembayaran gagal!", "error");
+      Swal.fire({
+        title: "Pembayaran Gagal",
+        text: "Maaf, terjadi kesalahan saat memproses pembayaran. Mohon coba lagi.",
+        icon: "error",
+        confirmButtonText: "Tutup"
+      });
     }
   };
 

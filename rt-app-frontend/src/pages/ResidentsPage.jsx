@@ -83,12 +83,22 @@ const ResidentsPage = () => {
         await api.post(`/residents/${editingId}`, data, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-        Swal.fire("Sukses!", "Penghuni berhasil diperbarui!", "success");
+        Swal.fire({
+          title: "Data Diperbarui",
+          text: "Informasi warga telah berhasil diperbarui.",
+          icon: "success",
+          confirmButtonText: "Selesai"
+        });
       } else {
         await api.post("/residents", data, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-        Swal.fire("Sukses!", "Penghuni berhasil ditambahkan!", "success");
+        Swal.fire({
+          title: "Data Tersimpan",
+          text: "Data warga baru telah berhasil ditambahkan ke dalam sistem.",
+          icon: "success",
+          confirmButtonText: "Selesai"
+        });
       }
       
       fetchResidents();
@@ -96,7 +106,12 @@ const ResidentsPage = () => {
     } catch (error) {
       console.error("Error saving resident:", error);
       const errorMessage = error.response?.data?.message || "Gagal menyimpan data.";
-      Swal.fire("Gagal!", errorMessage, "error");
+      Swal.fire({
+        title: "Gagal Tersimpan",
+        text: errorMessage,
+        icon: "error",
+        confirmButtonText: "Tutup"
+      });
     }
   };
 

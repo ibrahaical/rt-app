@@ -44,17 +44,32 @@ const HousesPage = () => {
     try {
       if (editingId) {
         await api.put(`/houses/${editingId}`, formData);
-        Swal.fire("Sukses!", "Rumah berhasil diperbarui!", "success");
+        Swal.fire({
+          title: "Data Diperbarui",
+          text: "Data nomor rumah berhasil diperbarui.",
+          icon: "success",
+          confirmButtonText: "Selesai"
+        });
       } else {
         await api.post("/houses", formData);
-        Swal.fire("Sukses!", "Rumah berhasil ditambahkan!", "success");
+        Swal.fire({
+          title: "Data Tersimpan",
+          text: "Data rumah baru berhasil ditambahkan.",
+          icon: "success",
+          confirmButtonText: "Selesai"
+        });
       }
       fetchHouses();
       handleCancelEdit();
     } catch (error) {
       console.error("Error saving house:", error);
       const errorMessage = error.response?.data?.message || "Gagal menyimpan data.";
-      Swal.fire("Gagal!", errorMessage, "error");
+      Swal.fire({
+        title: "Gagal Tersimpan",
+        text: errorMessage,
+        icon: "error",
+        confirmButtonText: "Tutup"
+      });
     }
   };
 
