@@ -203,6 +203,36 @@ const HouseDetailPage = () => {
                           </option>
                         ))}
                       </select>
+                      
+                      {/* Dynamic Helper Text */}
+                      {(() => {
+                        const selectedResident = residents.find(r => r.id.toString() === assignForm.resident_id.toString());
+                        if (!selectedResident) return null;
+                        
+                        if (selectedResident.current_house_history && selectedResident.current_house_history.house) {
+                          return (
+                            <div className="mt-2 p-2.5 rounded-md bg-amber-50 border border-amber-200 flex items-start gap-2">
+                              <svg className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                              </svg>
+                              <p className="text-xs text-amber-700 leading-relaxed">
+                                <span className="font-semibold">Perhatian:</span> Warga ini sedang menempati <span className="font-bold">Rumah {selectedResident.current_house_history.house.house_number}</span>. Proses ini akan otomatis memindahkannya dari rumah lamanya.
+                              </p>
+                            </div>
+                          );
+                        }
+                        
+                        return (
+                          <div className="mt-2 p-2.5 rounded-md bg-emerald-50 border border-emerald-200 flex items-center gap-2">
+                            <svg className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <p className="text-xs text-emerald-700 font-medium">
+                              Warga ini belum menempati rumah manapun.
+                            </p>
+                          </div>
+                        );
+                      })()}
                     </div>
                     <div>
                       <label htmlFor="assign-date" className="block text-sm font-medium text-gray-700 mb-1">Tanggal Masuk</label>

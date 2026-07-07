@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
             FeeTypeSeeder::class,
             HouseSeeder::class,
             ResidentSeeder::class,
+            BillSeeder::class,
         ]);
     }
 }

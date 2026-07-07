@@ -44,13 +44,13 @@ class BillGenerationService
             foreach ($feeTypes as $feeType) {
                 $bill = Bill::firstOrCreate(
                     [
-                        'house_id' => $house->id,
                         'resident_id' => $resident->id,
                         'fee_type_id' => $feeType->id,
                         'period_month' => $month,
                         'period_year' => $year,
                     ],
                     [
+                        'house_id' => $house->id,
                         'amount' => $feeType->amount,
                         'status' => 'belum_lunas',
                     ]

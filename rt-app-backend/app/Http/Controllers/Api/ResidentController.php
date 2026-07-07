@@ -10,7 +10,7 @@ class ResidentController extends Controller
 {
     public function index()
     {
-        return Resident::orderBy('name')->paginate(20);
+        return Resident::with('currentHouseHistory.house')->orderBy('name')->paginate(1000);
     }
 
     public function store(Request $request)

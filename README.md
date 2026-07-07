@@ -6,7 +6,7 @@ SmartRT adalah aplikasi *Full-Stack* (Laravel + React) yang dirancang khusus unt
 - **Manajemen Penghuni**: Pendataan warga (Nama, KTP, Status Nikah, Kontak, Status Kepemilikan).
 - **Manajemen Rumah & Riwayat**: Pencatatan unit rumah (Dihuni/Kosong) lengkap dengan riwayat siapa saja yang pernah menempati rumah tersebut beserta rentang waktunya.
 - **Sistem Penagihan Pintar**: *Generate* tagihan bulanan (Satpam Rp100.000, Kebersihan Rp15.000) yang hanya ditujukan pada rumah berstatus "Dihuni" untuk mencegah tagihan salah sasaran.
-- **Manajemen Pembayaran**: Pencatatan pembayaran tagihan warga secara *real-time*.
+- **Manajemen Pembayaran**: Pencatatan pembayaran tagihan warga secara *real-time*. Dilengkapi fitur khusus **"Buat Tagihan 1 Tahun"** untuk warga yang ingin membayar iuran penuh di muka.
 - **Laporan & Dashboard Keuangan**: Grafik interaktif 12 bulan pemasukan & pengeluaran, kartu ringkasan piutang/tunggakan, dan rincian kas bulanan yang bisa difilter berdasarkan tahun dan bulan.
 
 ## 🛠️ Tech Stack

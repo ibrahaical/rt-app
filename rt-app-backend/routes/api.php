@@ -28,6 +28,7 @@ Route::post('houses/{house}/remove-resident', [HouseController::class, 'removeRe
 
 Route::get('bills', [BillController::class, 'index']);
 Route::post('bills/generate', [BillController::class, 'generate']);
+Route::post('bills/generate-advance', [BillController::class, 'generateAdvance']);
 
 // === Hari 3: Pembayaran & Pengeluaran ===
 Route::post('payment-transactions', [PaymentTransactionController::class, 'store']);

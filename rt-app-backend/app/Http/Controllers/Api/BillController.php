@@ -52,4 +52,53 @@ class BillController extends Controller
             'skipped' => $result['skipped'],
         ]);
     }
+
+    /**
+     * Generate tagihan di muka (advance) sampai akhir tahun untuk seorang warga tertentu.
+     */
+    public function generateAdvance(Request $request)
+    {
+        $request->validate([
+            'resident_id' => 'required|exists:residents,id',
+        ]);
+
+        $resident = \App\Models\Resident::with('currentHouseHistory.house')->findOrFail($request->resident_id);
+        
+        if (!$resident->currentHouseHistory || !$resident->currentHouseHistory->house) {
+            return response()->json(['message' => 'Warga tidak menempati rumah apapun.'], 400);
+        }
+
+        $house = $resident->currentHouseHistory->house;
+        $feeTypes = \App\Models\FeeType::all();
+        $currentMonth = now()->month;
+        $currentYear = now()->year;
+        $created = 0;
+
+        for ($m = $currentMonth; $m <= 12; $m++) {
+            foreach ($feeTypes as $feeType) {
+                $bill = Bill::firstOrCreate(
+                    [
+                        'resident_id' => $resident->id,
+                        'fee_type_id' => $feeType->id,
+                        'period_month' => $m,
+                        'period_year' => $currentYear,
+                    ],
+                    [
+                        'house_id' => $house->id,
+                        'amount' => $feeType->amount,
+                        'status' => 'belum_lunas',
+                    ]
+                );
+                
+                if ($bill->wasRecentlyCreated) {
+                    $created++;
+                }
+            }
+        }
+
+        return response()->json([
+            'message' => "Berhasil mencetak $created tagihan di muka untuk sisa tahun $currentYear.",
+            'created' => $created
+        ]);
+    }
 }
