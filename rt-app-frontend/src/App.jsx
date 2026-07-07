@@ -7,6 +7,8 @@ import HouseDetailPage from "./pages/HouseDetailPage"; // Baru
 import BillsPage from "./pages/BillsPage"; // Baru
 import PaymentsPage from "./pages/PaymentsPage";
 import ExpensesPage from "./pages/ExpensesPage";
+import DashboardPage from "./pages/DashboardPage";
+import MonthlyReportPage from "./pages/MonthlyReportPage";
 
 function App() {
   return (
@@ -35,13 +37,14 @@ function App() {
           <Link to="/expenses" style={{ marginRight: "15px" }}>
             Pengeluaran
           </Link>
+          <Link to="/reports/monthly" style={{ marginRight: "15px" }}>
+            Laporan Detail
+          </Link>
         </nav>
 
         <Routes>
-          <Route
-            path="/"
-            element={<h3>Selamat datang di Aplikasi Kas RT</h3>}
-          />
+          <Route path="/" element={<DashboardPage />} />
+          <Route path="/reports/monthly" element={<MonthlyReportPage />} />
           <Route path="/residents" element={<ResidentsPage />} />
           <Route path="/houses" element={<HousesPage />} />
           <Route path="/houses/:id" element={<HouseDetailPage />} />

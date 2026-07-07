@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ResidentController;
 use App\Http\Controllers\Api\BillController;
 use App\Http\Controllers\Api\PaymentTransactionController;
 use App\Http\Controllers\Api\ExpenseController;
+use App\Http\Controllers\Api\ReportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,11 @@ Route::post('bills/generate', [BillController::class, 'generate']);
 Route::post('payment-transactions', [PaymentTransactionController::class, 'store']);
 Route::apiResource('expenses', ExpenseController::class)->only(['index', 'store']);
 
+
+// === Hari 4: Dashboard & Laporan ===
+Route::get('dashboard', [ReportController::class, 'dashboard']);
+Route::get('reports/yearly-chart', [ReportController::class, 'yearlyChart']);
+Route::get('reports/monthly-detail', [ReportController::class, 'monthlyDetail']);
 
 // === Endpoint di bawah ini akan ditambahkan pada paket Hari 2, 3, 4 ===
 // Route::post('houses/{house}/assign-resident', ...);

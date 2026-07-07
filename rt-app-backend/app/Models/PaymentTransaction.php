@@ -21,4 +21,9 @@ class PaymentTransaction extends Model
     {
         return $this->belongsTo(Resident::class);
     }
+
+    public function house()
+    {
+        return $this->belongsTo(House::class);
+    }
 }

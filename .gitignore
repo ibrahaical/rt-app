@@ -15,3 +15,7 @@ rt-app-frontend/dist/
 # OS
 .DS_Store
 Thumbs.db
+
+# Root Markdown
+/*.md
+!README.md
