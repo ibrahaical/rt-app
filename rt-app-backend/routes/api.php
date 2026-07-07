@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\HouseController;
 use App\Http\Controllers\Api\ResidentController;
+use App\Http\Controllers\Api\BillController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,15 @@ Route::apiResource('residents', ResidentController::class)
 // === Hari 1: Kelola Rumah ===
 Route::apiResource('houses', HouseController::class)
     ->only(['index', 'store', 'show', 'update']);
+
+// === Hari 2: Penempatan penghuni + riwayat + tagihan otomatis ===
+Route::post('houses/{house}/assign-resident', [HouseController::class, 'assignResident']);
+Route::post('houses/{house}/remove-resident', [HouseController::class, 'removeResident']);
+
+Route::get('bills', [BillController::class, 'index']);
+Route::post('bills/generate', [BillController::class, 'generate']);
+ 
+
 
 // === Endpoint di bawah ini akan ditambahkan pada paket Hari 2, 3, 4 ===
 // Route::post('houses/{house}/assign-resident', ...);

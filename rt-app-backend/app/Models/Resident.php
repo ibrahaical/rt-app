@@ -33,4 +33,12 @@ class Resident extends Model
     {
         return $this->hasOne(HouseResidentHistory::class)->whereNull('end_date');
     }
+
+    /**
+     * Semua tagihan (lunas maupun belum) milik penghuni ini.
+     */
+    public function bills()
+    {
+        return $this->hasMany(Bill::class);
+    }
 }

@@ -27,4 +27,12 @@ class House extends Model
     {
         return $this->hasOne(HouseResidentHistory::class)->whereNull('end_date');
     }
+
+    /**
+     * Semua tagihan yang pernah dibuat untuk rumah ini.
+     */
+    public function bills()
+    {
+        return $this->hasMany(Bill::class);
+    }
 }
