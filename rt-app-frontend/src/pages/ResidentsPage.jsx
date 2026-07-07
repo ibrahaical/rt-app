@@ -63,7 +63,7 @@ const ResidentsPage = () => {
     data.append("name", formData.name);
     data.append("phone", formData.phone);
     data.append("resident_type", formData.resident_type);
-    data.append("is_married", formData.is_married ? 1 : 0);
+    data.append("is_married", parseInt(formData.is_married) ? 1 : 0);
     if (formData.ktp_photo) {
       data.append("ktp_photo", formData.ktp_photo);
     }
