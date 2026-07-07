@@ -107,19 +107,25 @@ Fitur untuk manajemen rumah dan detail riwayat. Jika rumah dihuni, akan ada riwa
 *(Silakan masukkan screenshot Detail Rumah di bawah ini)*
 ![House Detail Screenshot](./screenshots/house_detail.png)
 
-### 4. Mengelola Pembayaran Iuran
+### 4. Tagihan Luaran (Generate Tagihan)
+Fitur *batch generator* untuk membuat tagihan iuran Satpam & Kebersihan bulan berjalan untuk semua rumah yang sedang dihuni secara otomatis dengan satu klik.
+
+*(Silakan masukkan screenshot Halaman Tagihan Luaran di bawah ini)*
+![Bills Screenshot](./screenshots/bills.png)
+
+### 5. Mengelola Pembayaran Iuran
 Input pembayaran iuran (Satpam & Kebersihan). Fitur ini memiliki validasi otomatis untuk hanya menagih rumah yang berpenghuni, dan bisa dibayar per bulan atau beberapa bulan sekaligus.
 
 *(Silakan masukkan screenshot Pembayaran di bawah ini)*
 ![Payments Screenshot](./screenshots/payments.png)
 
-### 5. Mengelola Pengeluaran
+### 6. Mengelola Pengeluaran
 Pencatatan pengeluaran operasional (seperti gaji satpam, listrik, perbaikan jalan).
 
 *(Silakan masukkan screenshot Pengeluaran di bawah ini)*
 ![Expenses Screenshot](./screenshots/expenses.png)
 
-### 6. Laporan Keuangan Detail Bulanan
+### 7. Laporan Keuangan Detail Bulanan
 Menampilkan laporan terperinci mengenai daftar pemasukan dan pengeluaran beserta total saldo pada bulan dan tahun tertentu.
 
 *(Silakan masukkan screenshot Laporan Bulanan di bawah ini)*

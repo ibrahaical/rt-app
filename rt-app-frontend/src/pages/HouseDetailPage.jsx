@@ -102,9 +102,17 @@ const HouseDetailPage = () => {
               {currentResident ? (
                 <div className="space-y-4">
                   <div className="flex items-start">
-                    <div className="flex-shrink-0 h-12 w-12 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold text-xl">
-                      {currentResident.resident?.name.charAt(0)}
-                    </div>
+                    {currentResident.resident?.ktp_photo ? (
+                      <img 
+                        src={`http://localhost:8000/storage/${currentResident.resident.ktp_photo}`}
+                        alt={`KTP ${currentResident.resident.name}`}
+                        className="flex-shrink-0 h-12 w-12 rounded-full object-cover border border-gray-200"
+                      />
+                    ) : (
+                      <div className="flex-shrink-0 h-12 w-12 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold text-xl">
+                        {currentResident.resident?.name.charAt(0)}
+                      </div>
+                    )}
                     <div className="ml-4">
                       <h4 className="text-lg font-medium text-gray-900">{currentResident.resident?.name}</h4>
                       <p className="text-sm text-gray-500 mt-1">
