@@ -27,17 +27,17 @@ const BillsPage = () => {
       
       let message = "";
       if (response.data.created > 0 && response.data.skipped === 0) {
-        message = `Berhasil membuat ${response.data.created} tagihan baru untuk warga bulan ini.`;
+        message = "Sukses! Tagihan bulan ini telah berhasil diterbitkan untuk semua rumah yang ada penghuninya.";
       } else if (response.data.created > 0 && response.data.skipped > 0) {
-        message = `Berhasil membuat ${response.data.created} tagihan baru. Terdapat ${response.data.skipped} tagihan yang dilewati karena sudah pernah dibuat sebelumnya.`;
+        message = "Berhasil menambahkan tagihan untuk penghuni yang belum ditagih. Penghuni yang sudah ditagih sebelumnya tidak ditagih ulang (tidak ada tagihan ganda).";
       } else if (response.data.created === 0 && response.data.skipped > 0) {
-        message = `Tidak ada tagihan baru yang dibuat. Semua warga yang menempati rumah (sebanyak ${response.data.skipped} tagihan) sudah memiliki tagihan bulan ini.`;
+        message = "Tagihan untuk bulan ini sudah pernah Anda terbitkan sebelumnya. Sistem membatalkan proses agar tidak terjadi tagihan ganda pada warga.";
       } else {
-        message = "Tidak ada rumah yang sedang dihuni, sehingga tidak ada tagihan yang perlu dibuat.";
+        message = "Belum ada warga yang menempati rumah, sehingga tidak ada tagihan yang diterbitkan.";
       }
 
       Swal.fire({
-        title: "Selesai Memproses",
+        title: "Selesai",
         text: message,
         icon: "success",
         confirmButtonText: "Baik, Terima Kasih"

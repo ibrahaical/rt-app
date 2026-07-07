@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import api from "../api";
 import Swal from "sweetalert2";
 
@@ -6,6 +6,7 @@ const ResidentsPage = () => {
   const [residents, setResidents] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const formRef = useRef(null);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -52,6 +53,8 @@ const ResidentsPage = () => {
       ktp_photo: null,
     });
     setPreviewUrl(resident.ktp_photo ? `http://localhost:8000/storage/${resident.ktp_photo}` : null);
+    // Auto-scroll ke form
+    setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
   };
 
   const handleCancelEdit = () => {
@@ -123,7 +126,7 @@ const ResidentsPage = () => {
       </div>
 
       {/* Form Tambah/Edit Penghuni */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+      <div ref={formRef} className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
           {editingId ? "Edit Penghuni" : "Tambah Penghuni Baru"}
         </h3>
@@ -133,8 +136,9 @@ const ResidentsPage = () => {
             <div className="lg:col-span-2">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                  <label htmlFor="resident-name" className="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
                   <input
+                    id="resident-name"
                     type="text"
                     name="name"
                     value={formData.name}
@@ -145,8 +149,9 @@ const ResidentsPage = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">No. HP</label>
+                  <label htmlFor="resident-phone" className="block text-sm font-medium text-gray-700 mb-1">No. HP</label>
                   <input
+                    id="resident-phone"
                     type="text"
                     name="phone"
                     value={formData.phone}
@@ -157,8 +162,9 @@ const ResidentsPage = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Status Penghuni</label>
+                  <label htmlFor="resident-type" className="block text-sm font-medium text-gray-700 mb-1">Status Penghuni</label>
                   <select
+                    id="resident-type"
                     name="resident_type"
                     value={formData.resident_type}
                     onChange={handleInputChange}
@@ -169,8 +175,9 @@ const ResidentsPage = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Status Pernikahan</label>
+                  <label htmlFor="resident-married" className="block text-sm font-medium text-gray-700 mb-1">Status Pernikahan</label>
                   <select
+                    id="resident-married"
                     name="is_married"
                     value={formData.is_married}
                     onChange={handleInputChange}
@@ -248,6 +255,12 @@ const ResidentsPage = () => {
 
       {/* Tabel List Penghuni */}
       <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
+        <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-gray-900">Daftar Warga Terdaftar</h3>
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+            {residents.length} Orang
+          </span>
+        </div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -262,7 +275,13 @@ const ResidentsPage = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {residents.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="px-6 py-4 text-center text-sm text-gray-500">Belum ada data penghuni.</td>
+                  <td colSpan="5" className="px-6 py-12 text-center">
+                    <svg className="mx-auto h-12 w-12 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <p className="text-sm text-gray-500 font-medium">Belum ada data warga yang terdaftar.</p>
+                    <p className="text-xs text-gray-400 mt-1">Silakan tambahkan warga baru menggunakan form di atas.</p>
+                  </td>
                 </tr>
               ) : (
                 residents.map((resident) => (

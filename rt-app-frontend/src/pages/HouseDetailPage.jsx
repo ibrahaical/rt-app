@@ -91,8 +91,12 @@ const HouseDetailPage = () => {
   };
 
   if (!house) return (
-    <div className="flex items-center justify-center h-64">
-      <p className="text-gray-500 text-lg">Loading detail rumah...</p>
+    <div className="flex flex-col items-center justify-center h-64">
+      <svg className="animate-spin h-8 w-8 text-primary-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      <p className="text-gray-500 text-sm">Memuat detail rumah...</p>
     </div>
   );
 
@@ -179,8 +183,9 @@ const HouseDetailPage = () => {
                   </div>
                   <form onSubmit={handleAssign} className="space-y-4 border-t border-gray-200 pt-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Pilih Penghuni</label>
+                      <label htmlFor="assign-resident" className="block text-sm font-medium text-gray-700 mb-1">Pilih Penghuni</label>
                       <select
+                        id="assign-resident"
                         required
                         value={assignForm.resident_id}
                         onChange={(e) =>
@@ -189,7 +194,7 @@ const HouseDetailPage = () => {
                             resident_id: e.target.value,
                           })
                         }
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
                       >
                         <option value="">-- Pilih Warga --</option>
                         {residents.map((r) => (
@@ -200,15 +205,16 @@ const HouseDetailPage = () => {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Tanggal Masuk</label>
+                      <label htmlFor="assign-date" className="block text-sm font-medium text-gray-700 mb-1">Tanggal Masuk</label>
                       <input
+                        id="assign-date"
                         type="date"
                         required
                         value={assignForm.start_date}
                         onChange={(e) =>
                           setAssignForm({ ...assignForm, start_date: e.target.value })
                         }
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500"
                       />
                     </div>
                     <button 

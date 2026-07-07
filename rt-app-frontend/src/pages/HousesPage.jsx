@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
 import Swal from "sweetalert2";
@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 const HousesPage = () => {
   const [houses, setHouses] = useState([]);
   const [editingId, setEditingId] = useState(null);
+  const formRef = useRef(null);
   const [formData, setFormData] = useState({
     house_number: "",
   });
@@ -32,6 +33,7 @@ const HousesPage = () => {
     setFormData({
       house_number: house.house_number,
     });
+    setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
   };
 
   const handleCancelEdit = () => {
@@ -83,14 +85,15 @@ const HousesPage = () => {
       </div>
 
       {/* Form Tambah/Edit Rumah */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+      <div ref={formRef} className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
           {editingId ? "Edit Nomor Rumah" : "Tambah Rumah Baru"}
         </h3>
         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 items-end">
           <div className="flex-1 w-full">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Nomor Rumah</label>
+            <label htmlFor="house-number" className="block text-sm font-medium text-gray-700 mb-1">Nomor Rumah</label>
             <input
+              id="house-number"
               type="text"
               name="house_number"
               value={formData.house_number}

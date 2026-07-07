@@ -89,8 +89,9 @@ const PaymentsPage = () => {
 
       <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
         <div className="max-w-md">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Pilih Warga</label>
+          <label htmlFor="select-resident" className="block text-sm font-medium text-gray-700 mb-2">Pilih Warga</label>
           <select
+            id="select-resident"
             value={selectedResident}
             onChange={(e) => setSelectedResident(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
@@ -112,9 +113,26 @@ const PaymentsPage = () => {
         >
           <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
             <h3 className="text-lg font-semibold text-gray-900">Checklist Tagihan Belum Lunas</h3>
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-800">
-              {unpaidBills.length} Tagihan Tertunggak
-            </span>
+            <div className="flex items-center gap-3">
+              {unpaidBills.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (selectedBills.length === unpaidBills.length) {
+                      setSelectedBills([]);
+                    } else {
+                      setSelectedBills(unpaidBills.map(b => b.id));
+                    }
+                  }}
+                  className="text-xs font-medium text-primary-700 hover:text-primary-900 underline transition-colors"
+                >
+                  {selectedBills.length === unpaidBills.length ? "Batal Semua" : "Pilih Semua"}
+                </button>
+              )}
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-800">
+                {unpaidBills.length} Tagihan Tertunggak
+              </span>
+            </div>
           </div>
           
           <div className="p-6">

@@ -59,8 +59,9 @@ const ExpensesPage = () => {
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Catat Pengeluaran Baru</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Judul Pengeluaran</label>
+                <label htmlFor="expense-title" className="block text-sm font-medium text-gray-700 mb-1">Judul Pengeluaran</label>
                 <input
+                  id="expense-title"
                   type="text"
                   value={formData.title}
                   onChange={(e) =>
@@ -72,12 +73,13 @@ const ExpensesPage = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Nominal (Rp)</label>
+                <label htmlFor="expense-amount" className="block text-sm font-medium text-gray-700 mb-1">Nominal (Rp)</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <span className="text-gray-500 sm:text-sm">Rp</span>
                   </div>
                   <input
+                    id="expense-amount"
                     type="text"
                     value={formData.amount ? formData.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : ""}
                     onChange={(e) => {
@@ -91,8 +93,9 @@ const ExpensesPage = () => {
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
+                <label htmlFor="expense-date" className="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
                 <input
+                  id="expense-date"
                   type="date"
                   value={formData.expense_date}
                   onChange={(e) =>
