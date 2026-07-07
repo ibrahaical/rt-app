@@ -1,0 +1,17 @@
+# Backend
+rt-app-backend/vendor/
+rt-app-backend/node_modules/
+rt-app-backend/.env
+rt-app-backend/storage/*.key
+
+# Frontend
+rt-app-frontend/node_modules/
+rt-app-frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
