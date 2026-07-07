@@ -116,68 +116,84 @@ const ResidentsPage = () => {
           {editingId ? "Edit Penghuni" : "Tambah Penghuni Baru"}
         </h3>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
-                placeholder="Misal: Budi Santoso"
-              />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Kolom Data Teks (Kiri) */}
+            <div className="lg:col-span-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
+                    placeholder="Misal: Budi Santoso"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">No. HP</label>
+                  <input
+                    type="text"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
+                    placeholder="Misal: 08123456789"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Status Penghuni</label>
+                  <select
+                    name="resident_type"
+                    value={formData.resident_type}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
+                  >
+                    <option value="tetap">Tetap</option>
+                    <option value="kontrak">Kontrak</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Status Pernikahan</label>
+                  <select
+                    name="is_married"
+                    value={formData.is_married}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
+                  >
+                    <option value={0}>Belum Menikah</option>
+                    <option value={1}>Sudah Menikah</option>
+                  </select>
+                </div>
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">No. HP</label>
-              <input
-                type="text"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
-                placeholder="Misal: 08123456789"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Status Penghuni</label>
-              <select
-                name="resident_type"
-                value={formData.resident_type}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
-              >
-                <option value="tetap">Tetap</option>
-                <option value="kontrak">Kontrak</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Status Pernikahan</label>
-              <select
-                name="is_married"
-                value={formData.is_married}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
-              >
-                <option value={0}>Belum Menikah</option>
-                <option value={1}>Sudah Menikah</option>
-              </select>
-            </div>
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Foto KTP</label>
-              <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                {previewUrl && (
-                  <div className="flex-shrink-0">
+
+            {/* Kolom Foto KTP (Kanan) */}
+            <div className="lg:col-span-1 lg:border-l lg:border-gray-200 lg:pl-6 pt-4 lg:pt-0 border-t border-gray-200 lg:border-t-0 mt-4 lg:mt-0">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Dokumen KTP</label>
+              <div className="flex flex-col gap-4">
+                {previewUrl ? (
+                  <div className="w-full">
                     <img 
                       src={previewUrl} 
                       alt="Preview KTP" 
-                      className="h-24 w-32 object-cover rounded-lg border border-gray-200 shadow-sm"
+                      className="w-full h-auto aspect-[8/5] object-cover rounded-lg border border-gray-300 shadow-sm"
                     />
                   </div>
+                ) : (
+                  <div className="w-full aspect-[8/5] bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-400">
+                    <svg className="w-8 h-8 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span className="text-xs font-medium">Belum ada foto</span>
+                  </div>
                 )}
-                <div className="flex-1 w-full space-y-2">
+                
+                <div className="w-full space-y-2 mt-2">
                   <input 
                     type="file" 
                     name="ktp_photo" 
@@ -190,8 +206,8 @@ const ResidentsPage = () => {
                       hover:file:bg-primary-100 transition-colors cursor-pointer"
                   />
                   {editingId && (
-                    <span className="text-xs text-gray-500 block">
-                      *Biarkan kosong jika tidak ingin mengubah foto KTP saat ini.
+                    <span className="text-xs text-gray-500 block leading-tight">
+                      *Abaikan jika tidak ingin mengubah KTP.
                     </span>
                   )}
                 </div>
@@ -241,16 +257,16 @@ const ResidentsPage = () => {
                   <tr key={resident.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10">
+                        <div className="flex-shrink-0 w-16 h-10">
                           {resident.ktp_photo ? (
                             <img
-                              className="h-10 w-10 rounded-full object-cover border border-gray-200"
+                              className="w-16 h-10 rounded-md object-cover border border-gray-300 shadow-sm"
                               src={`http://localhost:8000/storage/${resident.ktp_photo}`}
                               alt={`KTP ${resident.name}`}
                             />
                           ) : (
-                            <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
-                              <span className="text-gray-500 text-xs font-medium">{resident.name.substring(0, 2).toUpperCase()}</span>
+                            <div className="w-16 h-10 rounded-md bg-gray-100 border border-gray-200 flex items-center justify-center">
+                              <span className="text-gray-400 text-[10px] font-medium uppercase tracking-wider">No KTP</span>
                             </div>
                           )}
                         </div>

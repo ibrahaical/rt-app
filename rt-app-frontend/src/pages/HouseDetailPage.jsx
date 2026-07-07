@@ -101,23 +101,30 @@ const HouseDetailPage = () => {
             <div className="p-6">
               {currentResident ? (
                 <div className="space-y-4">
-                  <div className="flex items-start">
-                    {currentResident.resident?.ktp_photo ? (
-                      <img 
-                        src={`http://localhost:8000/storage/${currentResident.resident.ktp_photo}`}
-                        alt={`KTP ${currentResident.resident.name}`}
-                        className="flex-shrink-0 h-12 w-12 rounded-full object-cover border border-gray-200"
-                      />
-                    ) : (
-                      <div className="flex-shrink-0 h-12 w-12 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold text-xl">
-                        {currentResident.resident?.name.charAt(0)}
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-center gap-4">
+                      {currentResident.resident?.ktp_photo ? (
+                        <div className="flex-shrink-0">
+                          <img 
+                            src={`http://localhost:8000/storage/${currentResident.resident.ktp_photo}`}
+                            alt={`KTP ${currentResident.resident.name}`}
+                            className="w-32 h-auto aspect-[8/5] object-cover rounded-md border border-gray-300 shadow-sm"
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex-shrink-0 w-32 h-auto aspect-[8/5] rounded-md bg-gray-100 border border-gray-200 flex flex-col items-center justify-center">
+                           <div className="text-primary-600 font-bold text-xl mb-1">
+                             {currentResident.resident?.name.charAt(0)}
+                           </div>
+                           <span className="text-gray-400 text-[10px] font-medium uppercase tracking-wider">No KTP</span>
+                        </div>
+                      )}
+                      <div>
+                        <h4 className="text-lg font-medium text-gray-900">{currentResident.resident?.name}</h4>
+                        <p className="text-sm text-gray-500 mt-1">
+                          Sejak {new Date(currentResident.start_date).toLocaleDateString("id-ID")}
+                        </p>
                       </div>
-                    )}
-                    <div className="ml-4">
-                      <h4 className="text-lg font-medium text-gray-900">{currentResident.resident?.name}</h4>
-                      <p className="text-sm text-gray-500 mt-1">
-                        Sejak {new Date(currentResident.start_date).toLocaleDateString("id-ID")}
-                      </p>
                     </div>
                   </div>
                   <div className="pt-4 mt-4 border-t border-gray-200">
