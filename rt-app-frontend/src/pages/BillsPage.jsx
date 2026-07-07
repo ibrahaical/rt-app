@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import api from "../api";
 import Swal from "sweetalert2";
+import { useSortableData } from "../hooks/useSortableData";
 
 const BillsPage = () => {
   const [bills, setBills] = useState([]);
@@ -18,6 +19,30 @@ const BillsPage = () => {
   useEffect(() => {
     fetchBills();
   }, []);
+
+  const { items: sortedBills, requestSort, sortConfig } = useSortableData(bills, { key: 'house.house_number', direction: 'ascending' });
+
+  const getSortIcon = (key) => {
+    if (!sortConfig || sortConfig.key !== key) {
+      return (
+        <svg className="w-4 h-4 ml-1 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+        </svg>
+      );
+    }
+    if (sortConfig.direction === 'ascending') {
+      return (
+        <svg className="w-4 h-4 ml-1 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7" />
+        </svg>
+      );
+    }
+    return (
+      <svg className="w-4 h-4 ml-1 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    );
+  };
 
   const handleGenerate = async () => {
     setIsGenerating(true);
@@ -97,12 +122,36 @@ const BillsPage = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rumah</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Penghuni</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis Iuran</th>
-                <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Periode</th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Nominal</th>
-                <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <button type="button" onClick={() => requestSort('house.house_number')} className="group flex items-center focus:outline-none">
+                    Rumah {getSortIcon('house.house_number')}
+                  </button>
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <button type="button" onClick={() => requestSort('resident.name')} className="group flex items-center focus:outline-none">
+                    Penghuni {getSortIcon('resident.name')}
+                  </button>
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <button type="button" onClick={() => requestSort('fee_type.name')} className="group flex items-center focus:outline-none">
+                    Jenis Iuran {getSortIcon('fee_type.name')}
+                  </button>
+                </th>
+                <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <button type="button" onClick={() => requestSort('period_month')} className="group inline-flex items-center justify-center focus:outline-none">
+                    Periode {getSortIcon('period_month')}
+                  </button>
+                </th>
+                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <button type="button" onClick={() => requestSort('amount')} className="group inline-flex items-center justify-end w-full focus:outline-none">
+                    Nominal {getSortIcon('amount')}
+                  </button>
+                </th>
+                <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <button type="button" onClick={() => requestSort('status')} className="group inline-flex items-center justify-center focus:outline-none">
+                    Status {getSortIcon('status')}
+                  </button>
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -113,7 +162,7 @@ const BillsPage = () => {
                   </td>
                 </tr>
               ) : (
-                bills.map((bill) => (
+                sortedBills.map((bill) => (
                   <tr key={bill.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       Blok {bill.house?.house_number}

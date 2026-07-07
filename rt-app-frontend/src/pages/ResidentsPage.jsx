@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import api from "../api";
 import Swal from "sweetalert2";
+import { useSortableData } from "../hooks/useSortableData";
 
 const ResidentsPage = () => {
   const [residents, setResidents] = useState([]);
@@ -27,6 +28,30 @@ const ResidentsPage = () => {
   useEffect(() => {
     fetchResidents();
   }, []);
+
+  const { items: sortedResidents, requestSort, sortConfig } = useSortableData(residents, { key: 'name', direction: 'ascending' });
+
+  const getSortIcon = (key) => {
+    if (!sortConfig || sortConfig.key !== key) {
+      return (
+        <svg className="w-4 h-4 ml-1 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+        </svg>
+      );
+    }
+    if (sortConfig.direction === 'ascending') {
+      return (
+        <svg className="w-4 h-4 ml-1 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7" />
+        </svg>
+      );
+    }
+    return (
+      <svg className="w-4 h-4 ml-1 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    );
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -269,10 +294,26 @@ const ResidentsPage = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Profil / KTP</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kontak</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status Hunian</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status Nikah</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <button type="button" onClick={() => requestSort('name')} className="group flex items-center focus:outline-none">
+                    Profil / KTP {getSortIcon('name')}
+                  </button>
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <button type="button" onClick={() => requestSort('phone')} className="group flex items-center focus:outline-none">
+                    Kontak {getSortIcon('phone')}
+                  </button>
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <button type="button" onClick={() => requestSort('resident_type')} className="group flex items-center focus:outline-none">
+                    Status Hunian {getSortIcon('resident_type')}
+                  </button>
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <button type="button" onClick={() => requestSort('is_married')} className="group flex items-center focus:outline-none">
+                    Status Nikah {getSortIcon('is_married')}
+                  </button>
+                </th>
                 <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
               </tr>
             </thead>
@@ -288,7 +329,7 @@ const ResidentsPage = () => {
                   </td>
                 </tr>
               ) : (
-                residents.map((resident) => (
+                sortedResidents.map((resident) => (
                   <tr key={resident.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">

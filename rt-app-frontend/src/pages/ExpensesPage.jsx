@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import api from "../api";
 import Swal from "sweetalert2";
+import { useSortableData } from "../hooks/useSortableData";
 
 const ExpensesPage = () => {
   const [expenses, setExpenses] = useState([]);
@@ -21,6 +22,30 @@ const ExpensesPage = () => {
   useEffect(() => {
     fetchExpenses();
   }, []);
+
+  const { items: sortedExpenses, requestSort, sortConfig } = useSortableData(expenses, { key: 'expense_date', direction: 'descending' });
+
+  const getSortIcon = (key) => {
+    if (!sortConfig || sortConfig.key !== key) {
+      return (
+        <svg className="w-4 h-4 ml-1 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+        </svg>
+      );
+    }
+    if (sortConfig.direction === 'ascending') {
+      return (
+        <svg className="w-4 h-4 ml-1 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7" />
+        </svg>
+      );
+    }
+    return (
+      <svg className="w-4 h-4 ml-1 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    );
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -127,9 +152,21 @@ const ExpensesPage = () => {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Judul Pengeluaran</th>
-                    <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Nominal</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <button type="button" onClick={() => requestSort('expense_date')} className="group flex items-center focus:outline-none">
+                        Tanggal {getSortIcon('expense_date')}
+                      </button>
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <button type="button" onClick={() => requestSort('title')} className="group flex items-center focus:outline-none">
+                        Judul Pengeluaran {getSortIcon('title')}
+                      </button>
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <button type="button" onClick={() => requestSort('amount')} className="group inline-flex items-center justify-end w-full focus:outline-none">
+                        Nominal {getSortIcon('amount')}
+                      </button>
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -143,7 +180,7 @@ const ExpensesPage = () => {
                       </td>
                     </tr>
                   ) : (
-                    expenses.map((exp) => (
+                    sortedExpenses.map((exp) => (
                       <tr key={exp.id} className="hover:bg-gray-50 transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {new Date(exp.expense_date).toLocaleDateString("id-ID")}

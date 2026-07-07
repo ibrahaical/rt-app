@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
 import Swal from "sweetalert2";
+import { useSortableData } from "../hooks/useSortableData";
 
 const HousesPage = () => {
   const [houses, setHouses] = useState([]);
@@ -23,6 +24,30 @@ const HousesPage = () => {
   useEffect(() => {
     fetchHouses();
   }, []);
+
+  const { items: sortedHouses, requestSort, sortConfig } = useSortableData(houses, { key: 'house_number', direction: 'ascending' });
+
+  const getSortIcon = (key) => {
+    if (!sortConfig || sortConfig.key !== key) {
+      return (
+        <svg className="w-4 h-4 ml-1 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+        </svg>
+      );
+    }
+    if (sortConfig.direction === 'ascending') {
+      return (
+        <svg className="w-4 h-4 ml-1 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7" />
+        </svg>
+      );
+    }
+    return (
+      <svg className="w-4 h-4 ml-1 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    );
+  };
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -129,9 +154,21 @@ const HousesPage = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nomor Rumah</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status Hunian</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Penghuni Saat Ini</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <button type="button" onClick={() => requestSort('house_number')} className="group flex items-center focus:outline-none">
+                    Nomor Rumah {getSortIcon('house_number')}
+                  </button>
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <button type="button" onClick={() => requestSort('status')} className="group flex items-center focus:outline-none">
+                    Status Hunian {getSortIcon('status')}
+                  </button>
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <button type="button" onClick={() => requestSort('current_resident_history.resident.name')} className="group flex items-center focus:outline-none">
+                    Penghuni Saat Ini {getSortIcon('current_resident_history.resident.name')}
+                  </button>
+                </th>
                 <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
               </tr>
             </thead>
@@ -141,7 +178,7 @@ const HousesPage = () => {
                   <td colSpan="4" className="px-6 py-4 text-center text-sm text-gray-500">Belum ada data rumah.</td>
                 </tr>
               ) : (
-                houses.map((house) => (
+                sortedHouses.map((house) => (
                   <tr key={house.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       {house.house_number}
