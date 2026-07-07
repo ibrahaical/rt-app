@@ -6,19 +6,17 @@ import api from "../api";
 const HouseDetailPage = () => {
   const { id } = useParams();
   const [house, setHouse] = useState(null);
-  const [residents, setResidents] = useState([]); // Untuk pilihan dropdown
+  const [residents, setResidents] = useState([]);
   const [assignForm, setAssignForm] = useState({
     resident_id: "",
-    start_date: new Date().toISOString().split("T")[0], // Default hari ini
+    start_date: new Date().toISOString().split("T")[0],
   });
 
   const fetchData = async () => {
     try {
-      // Fetch detail rumah beserta riwayatnya
       const houseRes = await api.get(`/houses/${id}`);
       setHouse(houseRes.data);
 
-      // Fetch semua penghuni untuk opsi dropdown
       const residentsRes = await api.get("/residents");
       setResidents(residentsRes.data.data);
     } catch (error) {
@@ -39,7 +37,7 @@ const HouseDetailPage = () => {
         resident_id: "",
         start_date: new Date().toISOString().split("T")[0],
       });
-      fetchData(); // Refresh data
+      fetchData();
     } catch (error) {
       console.error("Error assigning resident:", error);
       alert("Gagal menempatkan penghuni.");
@@ -53,157 +51,236 @@ const HouseDetailPage = () => {
         end_date: new Date().toISOString().split("T")[0],
       });
       alert("Penghuni berhasil dikeluarkan.");
-      fetchData(); // Refresh data
+      fetchData();
     } catch (error) {
       console.error("Error removing resident:", error);
     }
   };
 
-  if (!house) return <p>Loading...</p>;
+  if (!house) return (
+    <div className="flex items-center justify-center h-64">
+      <p className="text-gray-500 text-lg">Loading detail rumah...</p>
+    </div>
+  );
 
-  // Cek apakah ada penghuni aktif
   const currentResident = house.histories.find((h) => h.end_date === null);
+  const isOccupied = house.status === "dihuni";
 
   return (
-    <div>
-      <Link to="/houses">← Kembali ke Daftar Rumah</Link>
-      <h3>Detail Rumah: {house.house_number}</h3>
-      <p>
-        Status:{" "}
-        <strong style={{ color: house.status === "dihuni" ? "green" : "red" }}>
-          {house.status === "dihuni" ? "Dihuni" : "Kosong"}
-        </strong>
-      </p>
-
-      <div
-        style={{
-          border: "1px solid #ccc",
-          padding: "15px",
-          marginBottom: "20px",
-        }}
-      >
-        <h4>Penghuni Sekarang</h4>
-        {currentResident ? (
+    <div className="space-y-6">
+      <div className="flex flex-col gap-4">
+        <Link 
+          to="/houses" 
+          className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors"
+        >
+          <svg className="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+          Kembali ke Daftar Rumah
+        </Link>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <p>Nama: {currentResident.resident?.name}</p>
-            <p>Mulai Menempati: {new Date(currentResident.start_date).toLocaleDateString("id-ID")}</p>
-            <button onClick={handleRemove} style={{ color: "red" }}>
-              Keluarkan Penghuni
-            </button>
+            <h2 className="text-2xl font-bold text-gray-900">Detail Rumah {house.house_number}</h2>
+            <div className="mt-2 flex items-center">
+              <span className="text-gray-600 mr-2">Status Saat Ini:</span>
+              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                isOccupied ? "bg-emerald-100 text-emerald-800" : "bg-rose-100 text-rose-800"
+              }`}>
+                {isOccupied ? "Dihuni" : "Kosong"}
+              </span>
+            </div>
           </div>
-        ) : (
-          <div>
-            <p>
-              <i>Rumah sedang kosong.</i>
-            </p>
-            <form onSubmit={handleAssign}>
-              <div style={{ marginBottom: "10px" }}>
-                <label>Pilih Penghuni: </label>
-                <select
-                  required
-                  value={assignForm.resident_id}
-                  onChange={(e) =>
-                    setAssignForm({
-                      ...assignForm,
-                      resident_id: e.target.value,
-                    })
-                  }
-                >
-                  <option value="">-- Pilih --</option>
-                  {residents.map((r) => (
-                    <option key={r.id} value={r.id}>
-                      {r.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div style={{ marginBottom: "10px" }}>
-                <label>Tanggal Masuk: </label>
-                <input
-                  type="date"
-                  required
-                  value={assignForm.start_date}
-                  onChange={(e) =>
-                    setAssignForm({ ...assignForm, start_date: e.target.value })
-                  }
-                />
-              </div>
-              <button type="submit">Tempatkan Penghuni</button>
-            </form>
-          </div>
-        )}
+        </div>
       </div>
 
-      <h4>Riwayat Penghuni</h4>
-      <table
-        border="1"
-        cellPadding="8"
-        style={{ width: "100%", borderCollapse: "collapse" }}
-      >
-        <thead>
-          <tr>
-            <th>Nama Penghuni</th>
-            <th>Tanggal Masuk</th>
-            <th>Tanggal Keluar</th>
-          </tr>
-        </thead>
-        <tbody>
-          {house.histories.map((history) => (
-            <tr key={history.id}>
-              <td>{history.resident?.name}</td>
-              <td>{new Date(history.start_date).toLocaleDateString("id-ID")}</td>
-              <td>{history.end_date ? new Date(history.end_date).toLocaleDateString("id-ID") : "Sekarang"}</td>
-            </tr>
-          ))}
-          {house.histories.length === 0 && (
-            <tr>
-              <td colSpan="3" style={{ textAlign: "center" }}>
-                Belum ada riwayat
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Kolom Kiri: Penghuni Sekarang */}
+        <div className="lg:col-span-1">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden sticky top-6">
+            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
+              <h3 className="text-lg font-semibold text-gray-900">Penghuni Sekarang</h3>
+            </div>
+            <div className="p-6">
+              {currentResident ? (
+                <div className="space-y-4">
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 h-12 w-12 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold text-xl">
+                      {currentResident.resident?.name.charAt(0)}
+                    </div>
+                    <div className="ml-4">
+                      <h4 className="text-lg font-medium text-gray-900">{currentResident.resident?.name}</h4>
+                      <p className="text-sm text-gray-500 mt-1">
+                        Sejak {new Date(currentResident.start_date).toLocaleDateString("id-ID")}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="pt-4 mt-4 border-t border-gray-200">
+                    <button 
+                      onClick={handleRemove} 
+                      className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-rose-600 hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 transition-colors"
+                    >
+                      Keluarkan Penghuni
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className="text-center py-4 mb-4">
+                    <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    <p className="mt-2 text-sm text-gray-500 italic">Rumah sedang kosong.</p>
+                  </div>
+                  <form onSubmit={handleAssign} className="space-y-4 border-t border-gray-200 pt-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Pilih Penghuni</label>
+                      <select
+                        required
+                        value={assignForm.resident_id}
+                        onChange={(e) =>
+                          setAssignForm({
+                            ...assignForm,
+                            resident_id: e.target.value,
+                          })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+                      >
+                        <option value="">-- Pilih Warga --</option>
+                        {residents.map((r) => (
+                          <option key={r.id} value={r.id}>
+                            {r.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Tanggal Masuk</label>
+                      <input
+                        type="date"
+                        required
+                        value={assignForm.start_date}
+                        onChange={(e) =>
+                          setAssignForm({ ...assignForm, start_date: e.target.value })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+                      />
+                    </div>
+                    <button 
+                      type="submit"
+                      className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+                    >
+                      Tempatkan Penghuni
+                    </button>
+                  </form>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
 
-      <h4>Riwayat Tagihan & Pembayaran</h4>
-      <table
-        border="1"
-        cellPadding="8"
-        style={{ width: "100%", borderCollapse: "collapse" }}
-      >
-        <thead>
-          <tr>
-            <th>Periode (Bulan/Tahun)</th>
-            <th>Jenis Iuran</th>
-            <th>Penghuni</th>
-            <th>Nominal</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {house.bills && house.bills.length > 0 ? (
-            house.bills.map((bill) => (
-              <tr key={bill.id}>
-                <td>
-                  {bill.period_month} / {bill.period_year}
-                </td>
-                <td>{bill.fee_type?.name}</td>
-                <td>{bill.resident?.name}</td>
-                <td>Rp {parseInt(bill.amount).toLocaleString("id-ID")}</td>
-                <td style={{ color: bill.status === "lunas" ? "green" : "red" }}>
-                  {bill.status === "lunas" ? "Lunas" : "Belum Lunas"}
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="5" style={{ textAlign: "center" }}>
-                Belum ada riwayat tagihan
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+        {/* Kolom Kanan: Riwayat-riwayat */}
+        <div className="lg:col-span-2 space-y-6">
+          
+          {/* Riwayat Penghuni */}
+          <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
+              <h3 className="text-lg font-semibold text-gray-900">Riwayat Penghuni</h3>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Penghuni</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal Masuk</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal Keluar</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {house.histories.length === 0 ? (
+                    <tr>
+                      <td colSpan="3" className="px-6 py-4 text-center text-sm text-gray-500">Belum ada riwayat penghuni.</td>
+                    </tr>
+                  ) : (
+                    house.histories.map((history) => (
+                      <tr key={history.id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          {history.resident?.name}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {new Date(history.start_date).toLocaleDateString("id-ID")}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {history.end_date ? (
+                            new Date(history.end_date).toLocaleDateString("id-ID")
+                          ) : (
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                              Sekarang
+                            </span>
+                          )}
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Riwayat Tagihan & Pembayaran */}
+          <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
+              <h3 className="text-lg font-semibold text-gray-900">Riwayat Tagihan & Pembayaran</h3>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Periode</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis Iuran</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Penghuni</th>
+                    <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Nominal</th>
+                    <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {house.bills && house.bills.length > 0 ? (
+                    house.bills.map((bill) => (
+                      <tr key={bill.id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
+                          {bill.period_month} / {bill.period_year}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {bill.fee_type?.name}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {bill.resident?.name}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right">
+                          Rp {parseInt(bill.amount).toLocaleString("id-ID")}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-center">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            bill.status === "lunas" 
+                              ? "bg-emerald-100 text-emerald-800" 
+                              : "bg-rose-100 text-rose-800"
+                          }`}>
+                            {bill.status === "lunas" ? "Lunas" : "Belum Lunas"}
+                          </span>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5" className="px-6 py-4 text-center text-sm text-gray-500">
+                        Belum ada riwayat tagihan.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   );
 };

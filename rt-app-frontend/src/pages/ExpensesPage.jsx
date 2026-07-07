@@ -35,82 +35,119 @@ const ExpensesPage = () => {
   };
 
   return (
-    <div>
-      <h3>Kelola Pengeluaran Kas RT</h3>
-      <div
-        style={{
-          border: "1px solid #ccc",
-          padding: "15px",
-          marginBottom: "20px",
-        }}
-      >
-        <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: "10px" }}>
-            <label>Judul Pengeluaran: </label>
-            <input
-              type="text"
-              value={formData.title}
-              onChange={(e) =>
-                setFormData({ ...formData, title: e.target.value })
-              }
-              required
-            />
-          </div>
-          <div style={{ marginBottom: "10px" }}>
-            <label>Nominal (Rp): </label>
-            <input
-              type="number"
-              value={formData.amount}
-              onChange={(e) =>
-                setFormData({ ...formData, amount: e.target.value })
-              }
-              required
-            />
-          </div>
-          <div style={{ marginBottom: "10px" }}>
-            <label>Tanggal: </label>
-            <input
-              type="date"
-              value={formData.expense_date}
-              onChange={(e) =>
-                setFormData({ ...formData, expense_date: e.target.value })
-              }
-              required
-            />
-          </div>
-          <button type="submit">Simpan Pengeluaran</button>
-        </form>
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-2xl font-bold text-gray-900">Pengeluaran Kas RT</h2>
+        <p className="text-gray-600 mt-1">Catat dan pantau semua pengeluaran operasional RT.</p>
       </div>
 
-      <table
-        border="1"
-        cellPadding="8"
-        style={{ width: "100%", borderCollapse: "collapse" }}
-      >
-        <thead>
-          <tr>
-            <th>Tanggal</th>
-            <th>Judul Pengeluaran</th>
-            <th>Nominal</th>
-          </tr>
-        </thead>
-        <tbody>
-          {expenses.map((exp) => (
-            <tr key={exp.id}>
-              <td>{new Date(exp.expense_date).toLocaleDateString("id-ID")}</td>
-              <td>{exp.title}</td>
-              <td>Rp {parseInt(exp.amount).toLocaleString("id-ID")}</td>
-            </tr>
-          ))}
-          {expenses.length === 0 && (
-            <tr>
-              <td colSpan="3" style={{ textAlign: "center" }}>
-                Belum ada pengeluaran.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Form Tambah Pengeluaran */}
+        <div className="lg:col-span-1">
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 sticky top-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Catat Pengeluaran Baru</h3>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Judul Pengeluaran</label>
+                <input
+                  type="text"
+                  value={formData.title}
+                  onChange={(e) =>
+                    setFormData({ ...formData, title: e.target.value })
+                  }
+                  required
+                  placeholder="Misal: Bayar Listrik Pos Kamling"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Nominal (Rp)</label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <span className="text-gray-500 sm:text-sm">Rp</span>
+                  </div>
+                  <input
+                    type="number"
+                    value={formData.amount}
+                    onChange={(e) =>
+                      setFormData({ ...formData, amount: e.target.value })
+                    }
+                    required
+                    className="w-full pl-10 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
+                    placeholder="0"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
+                <input
+                  type="date"
+                  value={formData.expense_date}
+                  onChange={(e) =>
+                    setFormData({ ...formData, expense_date: e.target.value })
+                  }
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
+                />
+              </div>
+              <div className="pt-2">
+                <button 
+                  type="submit"
+                  className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+                >
+                  Simpan Pengeluaran
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        {/* Tabel List Pengeluaran */}
+        <div className="lg:col-span-2">
+          <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
+              <h3 className="text-lg font-semibold text-gray-900">Riwayat Pengeluaran</h3>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Judul Pengeluaran</th>
+                    <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Nominal</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {expenses.length === 0 ? (
+                    <tr>
+                      <td colSpan="3" className="px-6 py-8 text-center text-sm text-gray-500">
+                        <svg className="mx-auto h-12 w-12 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Belum ada riwayat pengeluaran.
+                      </td>
+                    </tr>
+                  ) : (
+                    expenses.map((exp) => (
+                      <tr key={exp.id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {new Date(exp.expense_date).toLocaleDateString("id-ID")}
+                        </td>
+                        <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                          {exp.title}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-rose-600 text-right">
+                          Rp {parseInt(exp.amount).toLocaleString("id-ID")}
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

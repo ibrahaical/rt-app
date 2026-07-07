@@ -48,6 +48,10 @@ class ResidentController extends Controller
         ]);
 
         if ($request->hasFile('ktp_photo')) {
+            // Hapus file lama jika ada
+            if ($resident->ktp_photo && \Illuminate\Support\Facades\Storage::disk('public')->exists($resident->ktp_photo)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($resident->ktp_photo);
+            }
             $validated['ktp_photo'] = $request->file('ktp_photo')->store('ktp_photos', 'public');
         }
 
