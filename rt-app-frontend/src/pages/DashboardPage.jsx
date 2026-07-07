@@ -51,8 +51,8 @@ const DashboardPage = () => {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-2xl font-bold text-gray-900">Dashboard RT</h2>
-        <p className="text-gray-600">Ringkasan data dan keuangan RT pada tahun {currentYear}</p>
+        <h2 className="text-2xl font-bold text-gray-900">Dashboard SmartRT</h2>
+        <p className="text-gray-600">Ringkasan data dan keuangan pada tahun {currentYear}</p>
       </div>
 
       {/* Kartu Ringkasan */}

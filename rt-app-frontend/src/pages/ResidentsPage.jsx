@@ -10,8 +10,8 @@ const ResidentsPage = () => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    resident_type: "tetap",
-    is_married: 0,
+    resident_type: "",
+    is_married: "",
     ktp_photo: null,
   });
 
@@ -62,8 +62,8 @@ const ResidentsPage = () => {
     setFormData({
       name: "",
       phone: "",
-      resident_type: "tetap",
-      is_married: 0,
+      resident_type: "",
+      is_married: "",
       ktp_photo: null,
     });
     setPreviewUrl(null);
@@ -168,8 +168,10 @@ const ResidentsPage = () => {
                     name="resident_type"
                     value={formData.resident_type}
                     onChange={handleInputChange}
+                    required
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
                   >
+                    <option value="" disabled>-- Pilih Status Hunian --</option>
                     <option value="tetap">Tetap</option>
                     <option value="kontrak">Kontrak</option>
                   </select>
@@ -181,8 +183,10 @@ const ResidentsPage = () => {
                     name="is_married"
                     value={formData.is_married}
                     onChange={handleInputChange}
+                    required
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
                   >
+                    <option value="" disabled>-- Pilih Status Nikah --</option>
                     <option value={0}>Belum Menikah</option>
                     <option value={1}>Sudah Menikah</option>
                   </select>

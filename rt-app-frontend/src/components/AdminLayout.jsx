@@ -48,7 +48,7 @@ const AdminLayout = () => {
       {/* Sidebar Desktop */}
       <aside className="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col z-10">
         <div className="h-16 flex items-center px-6 border-b border-gray-200">
-          <h1 className="text-xl font-bold text-primary-600">RT Admin</h1>
+          <h1 className="text-xl font-bold text-primary-600 tracking-tight">SmartRT</h1>
         </div>
         <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto" aria-label="Menu utama">
           {navItems.map((item) => {
@@ -76,7 +76,7 @@ const AdminLayout = () => {
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
         {/* Mobile Header */}
         <header className="md:hidden h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 z-20">
-          <h1 className="text-lg font-bold text-primary-600">RT Admin</h1>
+          <h1 className="text-lg font-bold text-primary-600 tracking-tight">SmartRT</h1>
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
