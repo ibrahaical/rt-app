@@ -164,6 +164,46 @@ const HouseDetailPage = () => {
           )}
         </tbody>
       </table>
+
+      <h4>Riwayat Tagihan & Pembayaran</h4>
+      <table
+        border="1"
+        cellPadding="8"
+        style={{ width: "100%", borderCollapse: "collapse" }}
+      >
+        <thead>
+          <tr>
+            <th>Periode (Bulan/Tahun)</th>
+            <th>Jenis Iuran</th>
+            <th>Penghuni</th>
+            <th>Nominal</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {house.bills && house.bills.length > 0 ? (
+            house.bills.map((bill) => (
+              <tr key={bill.id}>
+                <td>
+                  {bill.period_month} / {bill.period_year}
+                </td>
+                <td>{bill.fee_type?.name}</td>
+                <td>{bill.resident?.name}</td>
+                <td>Rp {parseInt(bill.amount).toLocaleString("id-ID")}</td>
+                <td style={{ color: bill.status === "lunas" ? "green" : "red" }}>
+                  {bill.status === "lunas" ? "Lunas" : "Belum Lunas"}
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="5" style={{ textAlign: "center" }}>
+                Belum ada riwayat tagihan
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };

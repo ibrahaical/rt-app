@@ -31,7 +31,7 @@ class HouseController extends Controller
 
     public function show(House $house)
     {
-        return $house->load('histories.resident');
+        return $house->load(['histories.resident', 'bills.resident', 'bills.feeType']);
     }
 
     public function update(Request $request, House $house)
