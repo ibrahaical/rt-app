@@ -5,6 +5,8 @@ import ResidentsPage from "./pages/ResidentsPage";
 import HousesPage from "./pages/HousesPage";
 import HouseDetailPage from "./pages/HouseDetailPage"; // Baru
 import BillsPage from "./pages/BillsPage"; // Baru
+import PaymentsPage from "./pages/PaymentsPage";
+import ExpensesPage from "./pages/ExpensesPage";
 
 function App() {
   return (
@@ -24,7 +26,15 @@ function App() {
           <Link to="/houses" style={{ marginRight: "15px" }}>
             Kelola Rumah
           </Link>
-          <Link to="/bills">Tagihan Iuran</Link>
+          <Link to="/bills" style={{ marginRight: "15px" }}>
+            Tagihan Iuran
+          </Link>
+          <Link to="/payments" style={{ marginRight: "15px" }}>
+            Bayar Iuran
+          </Link>
+          <Link to="/expenses" style={{ marginRight: "15px" }}>
+            Pengeluaran
+          </Link>
         </nav>
 
         <Routes>
@@ -36,6 +46,8 @@ function App() {
           <Route path="/houses" element={<HousesPage />} />
           <Route path="/houses/:id" element={<HouseDetailPage />} />
           <Route path="/bills" element={<BillsPage />} />
+          <Route path="/payments" element={<PaymentsPage />} />
+          <Route path="/expenses" element={<ExpensesPage />} />
         </Routes>
       </div>
     </Router>

@@ -3,6 +3,8 @@
 use App\Http\Controllers\Api\HouseController;
 use App\Http\Controllers\Api\ResidentController;
 use App\Http\Controllers\Api\BillController;
+use App\Http\Controllers\Api\PaymentTransactionController;
+use App\Http\Controllers\Api\ExpenseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +27,10 @@ Route::post('houses/{house}/remove-resident', [HouseController::class, 'removeRe
 
 Route::get('bills', [BillController::class, 'index']);
 Route::post('bills/generate', [BillController::class, 'generate']);
- 
+
+// === Hari 3: Pembayaran & Pengeluaran ===
+Route::post('payment-transactions', [PaymentTransactionController::class, 'store']);
+Route::apiResource('expenses', ExpenseController::class)->only(['index', 'store']);
 
 
 // === Endpoint di bawah ini akan ditambahkan pada paket Hari 2, 3, 4 ===
