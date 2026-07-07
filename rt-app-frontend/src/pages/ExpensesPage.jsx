@@ -67,11 +67,12 @@ const ExpensesPage = () => {
                     <span className="text-gray-500 sm:text-sm">Rp</span>
                   </div>
                   <input
-                    type="number"
-                    value={formData.amount}
-                    onChange={(e) =>
-                      setFormData({ ...formData, amount: e.target.value })
-                    }
+                    type="text"
+                    value={formData.amount ? formData.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : ""}
+                    onChange={(e) => {
+                      const rawValue = e.target.value.replace(/[^0-9]/g, "");
+                      setFormData({ ...formData, amount: rawValue });
+                    }}
                     required
                     className="w-full pl-10 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
                     placeholder="0"
