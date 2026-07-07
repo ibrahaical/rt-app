@@ -86,7 +86,7 @@ const HouseDetailPage = () => {
         {currentResident ? (
           <div>
             <p>Nama: {currentResident.resident?.name}</p>
-            <p>Mulai Menempati: {currentResident.start_date}</p>
+            <p>Mulai Menempati: {new Date(currentResident.start_date).toLocaleDateString("id-ID")}</p>
             <button onClick={handleRemove} style={{ color: "red" }}>
               Keluarkan Penghuni
             </button>
@@ -151,8 +151,8 @@ const HouseDetailPage = () => {
           {house.histories.map((history) => (
             <tr key={history.id}>
               <td>{history.resident?.name}</td>
-              <td>{history.start_date}</td>
-              <td>{history.end_date ? history.end_date : "Sekarang"}</td>
+              <td>{new Date(history.start_date).toLocaleDateString("id-ID")}</td>
+              <td>{history.end_date ? new Date(history.end_date).toLocaleDateString("id-ID") : "Sekarang"}</td>
             </tr>
           ))}
           {house.histories.length === 0 && (

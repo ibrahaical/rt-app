@@ -67,9 +67,18 @@ class HouseController extends Controller
         $house->currentResidentHistory()->update(['end_date' => $startDate]);
 
         // Tutup histori aktif penghuni ini di rumah lain (kalau pindah dari rumah lain)
-        HouseResidentHistory::where('resident_id', $validated['resident_id'])
+        // Dan ubah status rumah lamanya menjadi tidak_dihuni
+        $previousHistories = HouseResidentHistory::where('resident_id', $validated['resident_id'])
             ->whereNull('end_date')
-            ->update(['end_date' => $startDate]);
+            ->get();
+
+        foreach ($previousHistories as $prevHistory) {
+            $prevHistory->update(['end_date' => $startDate]);
+            // Jangan lupa ubah status rumah lamanya jadi kosong
+            if ($prevHistory->house_id !== $house->id) {
+                \App\Models\House::where('id', $prevHistory->house_id)->update(['status' => 'tidak_dihuni']);
+            }
+        }
 
         $history = HouseResidentHistory::create([
             'house_id' => $house->id,

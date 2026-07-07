@@ -97,7 +97,7 @@ const ExpensesPage = () => {
         <tbody>
           {expenses.map((exp) => (
             <tr key={exp.id}>
-              <td>{exp.expense_date}</td>
+              <td>{new Date(exp.expense_date).toLocaleDateString("id-ID")}</td>
               <td>{exp.title}</td>
               <td>Rp {parseInt(exp.amount).toLocaleString("id-ID")}</td>
             </tr>
