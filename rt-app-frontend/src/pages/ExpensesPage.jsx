@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../api";
+import Swal from "sweetalert2";
 
 const ExpensesPage = () => {
   const [expenses, setExpenses] = useState([]);
@@ -25,12 +26,12 @@ const ExpensesPage = () => {
     e.preventDefault();
     try {
       await api.post("/expenses", formData);
-      alert("Pengeluaran berhasil dicatat!");
+      Swal.fire("Sukses!", "Pengeluaran berhasil dicatat!", "success");
       setFormData({ title: "", amount: "", expense_date: "", description: "" });
       fetchExpenses();
     } catch (error) {
       console.error(error);
-      alert("Gagal menyimpan pengeluaran.");
+      Swal.fire("Gagal!", "Gagal menyimpan pengeluaran.", "error");
     }
   };
 

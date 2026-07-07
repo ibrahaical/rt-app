@@ -1,7 +1,7 @@
-// src/pages/HouseDetailPage.jsx
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import api from "../api";
+import Swal from "sweetalert2";
 
 const HouseDetailPage = () => {
   const { id } = useParams();
@@ -32,7 +32,7 @@ const HouseDetailPage = () => {
     e.preventDefault();
     try {
       await api.post(`/houses/${id}/assign-resident`, assignForm);
-      alert("Penghuni berhasil ditempatkan!");
+      Swal.fire("Sukses!", "Penghuni berhasil ditempatkan!", "success");
       setAssignForm({
         resident_id: "",
         start_date: new Date().toISOString().split("T")[0],
@@ -40,20 +40,33 @@ const HouseDetailPage = () => {
       fetchData();
     } catch (error) {
       console.error("Error assigning resident:", error);
-      alert("Gagal menempatkan penghuni.");
+      Swal.fire("Gagal!", "Gagal menempatkan penghuni.", "error");
     }
   };
 
   const handleRemove = async () => {
-    if (!window.confirm("Yakin ingin mengeluarkan penghuni ini?")) return;
+    const result = await Swal.fire({
+      title: "Keluarkan Penghuni?",
+      text: "Yakin ingin mengeluarkan penghuni ini?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#e11d48",
+      cancelButtonColor: "#9ca3af",
+      confirmButtonText: "Ya, Keluarkan!",
+      cancelButtonText: "Batal"
+    });
+
+    if (!result.isConfirmed) return;
+
     try {
       await api.post(`/houses/${id}/remove-resident`, {
         end_date: new Date().toISOString().split("T")[0],
       });
-      alert("Penghuni berhasil dikeluarkan.");
+      Swal.fire("Berhasil!", "Penghuni berhasil dikeluarkan.", "success");
       fetchData();
     } catch (error) {
       console.error("Error removing resident:", error);
+      Swal.fire("Gagal!", "Terjadi kesalahan saat mengeluarkan penghuni.", "error");
     }
   };
 

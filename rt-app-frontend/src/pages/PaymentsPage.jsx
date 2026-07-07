@@ -1,6 +1,6 @@
-// src/pages/PaymentsPage.jsx
 import React, { useState, useEffect } from "react";
 import api from "../api";
+import Swal from "sweetalert2";
 
 const PaymentsPage = () => {
   const [residents, setResidents] = useState([]);
@@ -35,7 +35,7 @@ const PaymentsPage = () => {
 
   const handlePayment = async (e) => {
     e.preventDefault();
-    if (selectedBills.length === 0) return alert("Pilih minimal 1 tagihan!");
+    if (selectedBills.length === 0) return Swal.fire("Perhatian", "Pilih minimal 1 tagihan!", "warning");
 
     // Ambil house_id dari tagihan pertama yang dipilih (asumsi 1 warga 1 rumah aktif)
     const firstSelectedBill = unpaidBills.find(
@@ -49,13 +49,13 @@ const PaymentsPage = () => {
         bill_ids: selectedBills,
         notes: "Pembayaran Iuran Kolektif",
       });
-      alert("Pembayaran berhasil!");
+      Swal.fire("Sukses!", "Pembayaran berhasil!", "success");
       setSelectedResident("");
       setUnpaidBills([]);
       setSelectedBills([]);
     } catch (error) {
       console.error(error);
-      alert("Pembayaran gagal!");
+      Swal.fire("Gagal!", "Pembayaran gagal!", "error");
     }
   };
 

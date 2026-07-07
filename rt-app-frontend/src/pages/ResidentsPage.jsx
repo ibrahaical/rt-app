@@ -1,6 +1,6 @@
-// src/pages/ResidentsPage.jsx
 import React, { useState, useEffect } from "react";
 import api from "../api";
+import Swal from "sweetalert2";
 
 const ResidentsPage = () => {
   const [residents, setResidents] = useState([]);
@@ -83,12 +83,12 @@ const ResidentsPage = () => {
         await api.post(`/residents/${editingId}`, data, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-        alert("Penghuni berhasil diperbarui!");
+        Swal.fire("Sukses!", "Penghuni berhasil diperbarui!", "success");
       } else {
         await api.post("/residents", data, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-        alert("Penghuni berhasil ditambahkan!");
+        Swal.fire("Sukses!", "Penghuni berhasil ditambahkan!", "success");
       }
       
       fetchResidents();
@@ -96,10 +96,7 @@ const ResidentsPage = () => {
     } catch (error) {
       console.error("Error saving resident:", error);
       const errorMessage = error.response?.data?.message || "Gagal menyimpan data.";
-      const errorDetails = error.response?.data?.errors 
-        ? JSON.stringify(error.response.data.errors) 
-        : "";
-      alert(`${errorMessage}\n${errorDetails}`);
+      Swal.fire("Gagal!", errorMessage, "error");
     }
   };
 

@@ -1,6 +1,6 @@
-// src/pages/BillsPage.jsx
 import React, { useState, useEffect } from "react";
 import api from "../api";
+import Swal from "sweetalert2";
 
 const BillsPage = () => {
   const [bills, setBills] = useState([]);
@@ -24,13 +24,15 @@ const BillsPage = () => {
     try {
       // Hit POST /bills/generate sesuai instruksi
       const response = await api.post("/bills/generate");
-      alert(
-        `Selesai! ${response.data.created} tagihan baru dibuat, ${response.data.skipped} dilewati/sudah ada.`,
+      Swal.fire(
+        "Selesai!",
+        `${response.data.created} tagihan baru dibuat, ${response.data.skipped} dilewati/sudah ada.`,
+        "success"
       );
       fetchBills(); // Refresh tabel tagihan
     } catch (error) {
       console.error("Error generating bills:", error);
-      alert("Gagal men-generate tagihan.");
+      Swal.fire("Gagal!", "Gagal men-generate tagihan.", "error");
     } finally {
       setIsGenerating(false);
     }

@@ -1,7 +1,7 @@
-// src/pages/HousesPage.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
+import Swal from "sweetalert2";
 
 const HousesPage = () => {
   const [houses, setHouses] = useState([]);
@@ -44,20 +44,17 @@ const HousesPage = () => {
     try {
       if (editingId) {
         await api.put(`/houses/${editingId}`, formData);
-        alert("Rumah berhasil diperbarui!");
+        Swal.fire("Sukses!", "Rumah berhasil diperbarui!", "success");
       } else {
         await api.post("/houses", formData);
-        alert("Rumah berhasil ditambahkan!");
+        Swal.fire("Sukses!", "Rumah berhasil ditambahkan!", "success");
       }
       fetchHouses();
       handleCancelEdit();
     } catch (error) {
       console.error("Error saving house:", error);
       const errorMessage = error.response?.data?.message || "Gagal menyimpan data.";
-      const errorDetails = error.response?.data?.errors 
-        ? JSON.stringify(error.response.data.errors) 
-        : "";
-      alert(`${errorMessage}\n${errorDetails}`);
+      Swal.fire("Gagal!", errorMessage, "error");
     }
   };
 
