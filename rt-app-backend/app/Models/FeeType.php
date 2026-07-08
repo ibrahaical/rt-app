@@ -9,7 +9,6 @@ class FeeType extends Model
     protected $table = 'rt_fee_type_t';
     protected $fillable = [
         'name',
-        'code',
         'amount',
     ];
 }

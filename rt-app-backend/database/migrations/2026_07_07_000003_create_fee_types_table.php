@@ -11,7 +11,6 @@ return new class extends Migration
         Schema::create('rt_fee_type_t', function (Blueprint $table) {
             $table->id();
             $table->string('name');        // Satpam, Kebersihan
-            $table->string('code')->unique(); // satpam, kebersihan
             $table->unsignedInteger('amount'); // nominal per bulan, dalam Rupiah
             $table->timestamps();
         });
