@@ -52,8 +52,8 @@ const DashboardPage = () => {
     <div className="space-y-8">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Dashboard SmartRT</h2>
-          <p className="text-gray-600 mt-1">Ringkasan data dan keuangan RT.</p>
+          <h2 className="text-h2-mobile md:text-h2-md lg:text-h2-lg font-heading font-bold text-gray-900">Dashboard SmartRT</h2>
+          <p className="text-body-mobile md:text-body-md text-gray-600 mt-1">Ringkasan data dan keuangan RT.</p>
         </div>
         
         <div className="flex items-center gap-3 bg-white p-2 rounded-lg shadow-sm border border-gray-200">
@@ -87,12 +87,12 @@ const DashboardPage = () => {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h4 className="text-sm font-medium text-gray-500">Total Saldo Kas RT</h4>
+              <h4 className="text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Total Saldo Kas RT</h4>
               <div className="p-2 bg-emerald-50 rounded-lg" aria-hidden="true">
                 <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               </div>
             </div>
-            <h2 className="text-3xl font-bold text-emerald-600">
+            <h2 className="text-h2-mobile md:text-h2-md lg:text-h2-lg font-heading font-bold text-emerald-600">
               {formatRp(dashboardData.financial_total.balance)}
             </h2>
           </div>
@@ -101,12 +101,12 @@ const DashboardPage = () => {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h4 className="text-sm font-medium text-gray-500">Pemasukan Bulan Ini</h4>
+              <h4 className="text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Pemasukan Bulan Ini</h4>
               <div className="p-2 bg-blue-50 rounded-lg" aria-hidden="true">
                 <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 11l5-5m0 0l5 5m-5-5v12" /></svg>
               </div>
             </div>
-            <h3 className="text-2xl font-bold text-blue-600">
+            <h3 className="text-h3-mobile md:text-h3-md font-heading font-bold text-blue-600">
               {formatRp(dashboardData.financial_month.income)}
             </h3>
           </div>
@@ -115,12 +115,12 @@ const DashboardPage = () => {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h4 className="text-sm font-medium text-gray-500">Pengeluaran Bulan Ini</h4>
+              <h4 className="text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Pengeluaran Bulan Ini</h4>
               <div className="p-2 bg-rose-50 rounded-lg" aria-hidden="true">
                 <svg className="w-5 h-5 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 13l-5 5m0 0l-5-5m5 5V6" /></svg>
               </div>
             </div>
-            <h3 className="text-2xl font-bold text-rose-600">
+            <h3 className="text-h3-mobile md:text-h3-md font-heading font-bold text-rose-600">
               {formatRp(dashboardData.financial_month.expense)}
             </h3>
           </div>
@@ -129,7 +129,7 @@ const DashboardPage = () => {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h4 className="text-sm font-medium text-gray-500">Status Rumah</h4>
+              <h4 className="text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Status Rumah</h4>
               <div className="p-2 bg-indigo-50 rounded-lg" aria-hidden="true">
                 <svg className="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
               </div>
@@ -152,7 +152,7 @@ const DashboardPage = () => {
 
       {/* Grafik Tahunan */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-6">Grafik Keuangan Tahun {selectedYear}</h3>
+        <h3 className="text-h3-mobile md:text-h3-md font-heading font-bold text-gray-900 mb-6">Grafik Keuangan Tahun {selectedYear}</h3>
         <div className="w-full h-80">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart

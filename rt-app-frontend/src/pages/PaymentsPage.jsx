@@ -170,8 +170,8 @@ const PaymentsPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-gray-900">Pembayaran Iuran</h2>
-        <p className="text-gray-600 mt-1">Kelola dan terima pembayaran iuran dari warga yang memiliki tunggakan.</p>
+        <h2 className="text-h2-mobile md:text-h2-md lg:text-h2-lg font-heading font-bold text-gray-900">Pembayaran Iuran</h2>
+        <p className="text-body-mobile md:text-body-md text-gray-600 mt-1">Kelola dan terima pembayaran iuran dari warga yang memiliki tunggakan.</p>
       </div>
 
       {/* Form Pembayaran (Hanya Muncul Jika Warga Dipilih) */}
@@ -204,7 +204,7 @@ const PaymentsPage = () => {
               {/* Info & Actions Column */}
               <div className="md:col-span-8 lg:col-span-9 flex flex-col h-full justify-center gap-4">
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900">{selectedGroup.resident.name}</h3>
+                  <h3 className="text-h2-mobile md:text-h2-md lg:text-h2-lg font-heading font-bold text-gray-900">{selectedGroup.resident.name}</h3>
                   <div className="flex flex-wrap items-center gap-3 mt-3">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-indigo-100 text-indigo-800 capitalize shadow-sm">
                       Warga {selectedGroup.resident.resident_type}
@@ -223,7 +223,7 @@ const PaymentsPage = () => {
                   <button
                     type="button"
                     onClick={handleGenerateAdvance}
-                    className="text-sm font-medium text-primary-700 hover:text-primary-900 bg-primary-50 px-4 py-2 rounded-lg border border-primary-200 hover:bg-primary-100 transition-colors shadow-sm"
+                    className="text-cta-mobile md:text-cta-md font-bold text-primary-700 hover:text-primary-900 bg-primary-50 px-5 py-2.5 rounded-lg border border-primary-200 hover:bg-primary-100 transition-colors shadow-sm"
                   >
                     Buat Tagihan 1 Tahun
                   </button>
@@ -236,14 +236,14 @@ const PaymentsPage = () => {
                         setSelectedBills(selectedGroup.bills.map(b => b.id));
                       }
                     }}
-                    className="text-sm font-medium text-gray-700 hover:text-primary-600 bg-white px-4 py-2 rounded-lg border border-gray-300 hover:border-primary-300 transition-colors shadow-sm"
+                    className="text-cta-mobile md:text-cta-md font-bold text-gray-700 hover:text-primary-600 bg-white px-5 py-2.5 rounded-lg border border-gray-300 hover:border-primary-300 transition-colors shadow-sm"
                   >
                     {selectedBills.length === selectedGroup.bills.length ? "Batal Semua" : "Pilih Semua"}
                   </button>
                   <button
                     type="button"
                     onClick={handleCancelPayment}
-                    className="text-sm font-medium text-gray-700 hover:text-rose-600 bg-white px-4 py-2 rounded-lg border border-gray-300 hover:border-rose-300 transition-colors shadow-sm"
+                    className="text-cta-mobile md:text-cta-md font-bold text-gray-700 hover:text-rose-600 bg-white px-5 py-2.5 rounded-lg border border-gray-300 hover:border-rose-300 transition-colors shadow-sm"
                   >
                     Tutup Form
                   </button>
@@ -308,7 +308,7 @@ const PaymentsPage = () => {
               <button 
                 type="submit" 
                 disabled={selectedBills.length === 0}
-                className="w-full sm:w-auto px-8 py-3 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold rounded-lg transition-colors shadow-sm text-lg"
+                className="w-full sm:w-auto text-cta-mobile md:text-cta-md font-bold px-8 py-2.5 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg transition-colors shadow-sm"
               >
                 Konfirmasi Pembayaran
               </button>
@@ -321,7 +321,7 @@ const PaymentsPage = () => {
       <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <h3 className="text-lg font-semibold text-gray-900">Daftar Warga Menunggak</h3>
+            <h3 className="text-h3-mobile md:text-h3-md font-heading font-semibold text-gray-900">Daftar Warga Menunggak</h3>
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-800">
               {groupedArray.length} Warga
             </span>
@@ -341,20 +341,20 @@ const PaymentsPage = () => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <button type="button" onClick={() => requestSort('resident.name')} className="group flex items-center focus:outline-none">
+                  <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                    <button type="button" onClick={() => requestSort('resident.name')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                       Nama Warga {getSortIcon('resident.name')}
                     </button>
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
                     Jumlah Tunggakan
                   </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <button type="button" onClick={() => requestSort('totalAmount')} className="group flex items-center focus:outline-none">
+                  <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                    <button type="button" onClick={() => requestSort('totalAmount')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                       Total Nominal {getSortIcon('totalAmount')}
                     </button>
                   </th>
-                  <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                  <th scope="col" className="px-6 py-3 text-right text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Aksi</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -379,7 +379,7 @@ const PaymentsPage = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-medium">
                       <button
                         onClick={() => handleSelectGroup(group)}
-                        className="px-4 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 hover:text-primary-600 hover:border-primary-300 font-medium rounded-lg transition-colors shadow-sm"
+                        className="text-cta-mobile md:text-cta-md font-bold px-5 py-2.5 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 hover:text-primary-600 hover:border-primary-300 rounded-lg transition-colors shadow-sm"
                       >
                         Proses Pembayaran
                       </button>

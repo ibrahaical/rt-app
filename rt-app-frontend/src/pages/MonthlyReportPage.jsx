@@ -31,8 +31,8 @@ const MonthlyReportPage = () => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Laporan Keuangan Bulanan</h2>
-          <p className="text-gray-600 mt-1">Rincian pemasukan dan pengeluaran kas RT per bulan.</p>
+          <h2 className="text-h2-mobile md:text-h2-md lg:text-h2-lg font-heading font-bold text-gray-900">Laporan Keuangan Bulanan</h2>
+          <p className="text-body-mobile md:text-body-md text-gray-600 mt-1">Rincian pemasukan dan pengeluaran kas RT per bulan.</p>
         </div>
         
         <div className="flex items-center gap-3 bg-white p-2 rounded-lg shadow-sm border border-gray-200">
@@ -91,15 +91,15 @@ const MonthlyReportPage = () => {
           <div className="space-y-4">
             <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-200 bg-blue-50 flex justify-between items-center">
-                <h3 className="text-lg font-semibold text-blue-900">Daftar Pemasukan (Iuran)</h3>
+                <h3 className="text-h3-mobile md:text-h3-md font-heading font-semibold text-blue-900">Daftar Pemasukan (Iuran)</h3>
               </div>
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-white">
                     <tr>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sumber</th>
-                      <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Nominal</th>
+                      <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Tanggal</th>
+                      <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Sumber</th>
+                      <th scope="col" className="px-6 py-3 text-right text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Nominal</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
@@ -135,15 +135,15 @@ const MonthlyReportPage = () => {
           <div className="space-y-4">
             <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-200 bg-rose-50 flex justify-between items-center">
-                <h3 className="text-lg font-semibold text-rose-900">Daftar Pengeluaran</h3>
+                <h3 className="text-h3-mobile md:text-h3-md font-heading font-semibold text-rose-900">Daftar Pengeluaran</h3>
               </div>
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-white">
                     <tr>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Keterangan</th>
-                      <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Nominal</th>
+                      <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Tanggal</th>
+                      <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Keterangan</th>
+                      <th scope="col" className="px-6 py-3 text-right text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Nominal</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">

@@ -73,15 +73,15 @@ const ExpensesPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-gray-900">Pengeluaran Kas RT</h2>
-        <p className="text-gray-600 mt-1">Catat dan pantau semua pengeluaran operasional RT.</p>
+        <h2 className="text-h2-mobile md:text-h2-md lg:text-h2-lg font-heading font-bold text-gray-900">Pengeluaran Kas RT</h2>
+        <p className="text-body-mobile md:text-body-md text-gray-600 mt-1">Catat dan pantau semua pengeluaran operasional RT.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Form Tambah Pengeluaran */}
         <div className="lg:col-span-1">
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 sticky top-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Catat Pengeluaran Baru</h3>
+            <h3 className="text-h3-mobile md:text-h3-md font-heading font-semibold text-gray-900 mb-4">Catat Pengeluaran Baru</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="expense-title" className="block text-sm font-medium text-gray-700 mb-1">Judul Pengeluaran</label>
@@ -133,7 +133,7 @@ const ExpensesPage = () => {
               <div className="pt-2">
                 <button 
                   type="submit"
-                  className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+                  className="w-full flex justify-center text-cta-mobile md:text-cta-md font-bold px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
                 >
                   Simpan Pengeluaran
                 </button>
@@ -146,24 +146,24 @@ const ExpensesPage = () => {
         <div className="lg:col-span-2">
           <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
-              <h3 className="text-lg font-semibold text-gray-900">Riwayat Pengeluaran</h3>
+              <h3 className="text-h3-mobile md:text-h3-md font-heading font-semibold text-gray-900">Riwayat Pengeluaran</h3>
             </div>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      <button type="button" onClick={() => requestSort('expense_date')} className="group flex items-center focus:outline-none">
+                    <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                      <button type="button" onClick={() => requestSort('expense_date')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                         Tanggal {getSortIcon('expense_date')}
                       </button>
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      <button type="button" onClick={() => requestSort('title')} className="group flex items-center focus:outline-none">
+                    <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                      <button type="button" onClick={() => requestSort('title')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                         Judul Pengeluaran {getSortIcon('title')}
                       </button>
                     </th>
-                    <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      <button type="button" onClick={() => requestSort('amount')} className="group inline-flex items-center justify-end w-full focus:outline-none">
+                    <th scope="col" className="px-6 py-3 text-right text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                      <button type="button" onClick={() => requestSort('amount')} className="group inline-flex items-center justify-end w-full focus:outline-none hover:text-primary-600 transition-colors">
                         Nominal {getSortIcon('amount')}
                       </button>
                     </th>

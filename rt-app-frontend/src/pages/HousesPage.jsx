@@ -104,14 +104,14 @@ const HousesPage = () => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Data Rumah</h2>
-          <p className="text-gray-600 mt-1">Total: {houses.length} unit rumah yang terdaftar di perumahan ini.</p>
+          <h2 className="text-h2-mobile md:text-h2-md lg:text-h2-lg font-heading font-bold text-gray-900">Data Rumah</h2>
+          <p className="text-body-mobile md:text-body-md text-gray-600 mt-1">Total: {houses.length} unit rumah yang terdaftar di perumahan ini.</p>
         </div>
       </div>
 
       {/* Form Tambah/Edit Rumah */}
       <div ref={formRef} className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        <h3 className="text-h3-mobile md:text-h3-md font-heading font-semibold text-gray-900 mb-4">
           {editingId ? "Edit Nomor Rumah" : "Tambah Rumah Baru"}
         </h3>
         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 items-end">
@@ -131,7 +131,7 @@ const HousesPage = () => {
           <div className="flex gap-2 w-full sm:w-auto">
             <button 
               type="submit" 
-              className="flex-1 sm:flex-none px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors"
+              className="flex-1 sm:flex-none text-cta-mobile md:text-cta-md font-bold px-5 md:px-6 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors shadow-sm"
             >
               {editingId ? "Update" : "Simpan"}
             </button>
@@ -139,7 +139,7 @@ const HousesPage = () => {
               <button
                 type="button"
                 onClick={handleCancelEdit}
-                className="flex-1 sm:flex-none px-6 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-lg transition-colors"
+                className="flex-1 sm:flex-none text-cta-mobile md:text-cta-md font-bold px-5 md:px-6 py-2.5 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors shadow-sm"
               >
                 Batal
               </button>
@@ -154,22 +154,22 @@ const HousesPage = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  <button type="button" onClick={() => requestSort('house_number')} className="group flex items-center focus:outline-none">
+                <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  <button type="button" onClick={() => requestSort('house_number')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                     Nomor Rumah {getSortIcon('house_number')}
                   </button>
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  <button type="button" onClick={() => requestSort('status')} className="group flex items-center focus:outline-none">
+                <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  <button type="button" onClick={() => requestSort('status')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                     Status Hunian {getSortIcon('status')}
                   </button>
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  <button type="button" onClick={() => requestSort('current_resident_history.resident.name')} className="group flex items-center focus:outline-none">
+                <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  <button type="button" onClick={() => requestSort('current_resident_history.resident.name')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                     Penghuni Saat Ini {getSortIcon('current_resident_history.resident.name')}
                   </button>
                 </th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                <th scope="col" className="px-6 py-3 text-right text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Aksi</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -199,7 +199,7 @@ const HousesPage = () => {
                       <div className="flex items-center justify-end gap-2">
                         <button 
                           onClick={() => handleEditClick(house)}
-                          className="px-3 py-1.5 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-md transition-colors flex items-center"
+                          className="text-cta-mobile md:text-cta-md font-bold px-4 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors shadow-sm flex items-center"
                         >
                           <svg className="w-4 h-4 mr-1.5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -208,7 +208,7 @@ const HousesPage = () => {
                         </button>
                         <Link 
                           to={`/houses/${house.id}`}
-                          className="px-3 py-1.5 bg-primary-50 text-primary-700 hover:bg-primary-100 rounded-md transition-colors flex items-center"
+                          className="text-cta-mobile md:text-cta-md font-bold px-4 py-2 bg-primary-50 text-primary-700 hover:bg-primary-100 rounded-lg transition-colors shadow-sm flex items-center"
                         >
                           <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />

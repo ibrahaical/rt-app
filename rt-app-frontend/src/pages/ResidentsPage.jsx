@@ -149,13 +149,13 @@ const ResidentsPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-gray-900">Data Penghuni</h2>
-        <p className="text-gray-600 mt-1">Kelola data warga perumahan, baik warga tetap maupun kontrak.</p>
+        <h2 className="text-h2-mobile md:text-h2-md lg:text-h2-lg font-heading font-bold text-gray-900">Data Penghuni</h2>
+        <p className="text-body-mobile md:text-body-md text-gray-600 mt-1">Kelola data warga perumahan, baik warga tetap maupun kontrak.</p>
       </div>
 
       {/* Form Tambah/Edit Penghuni */}
       <div ref={formRef} className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        <h3 className="text-h3-mobile md:text-h3-md font-heading font-semibold text-gray-900 mb-4">
           {editingId ? "Edit Penghuni" : "Tambah Penghuni Baru"}
         </h3>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -279,7 +279,7 @@ const ResidentsPage = () => {
           <div className="pt-4 flex gap-3">
             <button 
               type="submit" 
-              className="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors"
+              className="text-cta-mobile md:text-cta-md font-bold px-5 md:px-6 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors shadow-sm"
             >
               {editingId ? "Update Penghuni" : "Simpan Penghuni"}
             </button>
@@ -287,7 +287,7 @@ const ResidentsPage = () => {
               <button
                 type="button"
                 onClick={handleCancelEdit}
-                className="px-6 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-lg transition-colors"
+                className="text-cta-mobile md:text-cta-md font-bold px-5 md:px-6 py-2.5 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors shadow-sm"
               >
                 Batal
               </button>
@@ -299,7 +299,7 @@ const ResidentsPage = () => {
       {/* Tabel List Penghuni */}
       <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-900">Daftar Warga Terdaftar</h3>
+          <h3 className="text-h3-mobile md:text-h3-md font-heading font-semibold text-gray-900">Daftar Warga Terdaftar</h3>
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
             {residents.length} Orang
           </span>
@@ -308,27 +308,27 @@ const ResidentsPage = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  <button type="button" onClick={() => requestSort('name')} className="group flex items-center focus:outline-none">
+                <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  <button type="button" onClick={() => requestSort('name')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                     Profil / KTP {getSortIcon('name')}
                   </button>
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  <button type="button" onClick={() => requestSort('phone')} className="group flex items-center focus:outline-none">
+                <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  <button type="button" onClick={() => requestSort('phone')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                     Kontak {getSortIcon('phone')}
                   </button>
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  <button type="button" onClick={() => requestSort('resident_type')} className="group flex items-center focus:outline-none">
+                <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  <button type="button" onClick={() => requestSort('resident_type')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                     Status Hunian {getSortIcon('resident_type')}
                   </button>
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  <button type="button" onClick={() => requestSort('is_married')} className="group flex items-center focus:outline-none">
+                <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  <button type="button" onClick={() => requestSort('is_married')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                     Status Nikah {getSortIcon('is_married')}
                   </button>
                 </th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                <th scope="col" className="px-6 py-3 text-right text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Aksi</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -393,7 +393,7 @@ const ResidentsPage = () => {
                       <div className="flex items-center justify-end">
                         <button 
                           onClick={() => handleEditClick(resident)}
-                          className="px-3 py-1.5 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-md transition-colors flex items-center"
+                          className="text-cta-mobile md:text-cta-md font-bold px-4 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors shadow-sm flex items-center"
                         >
                           <svg className="w-4 h-4 mr-1.5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />

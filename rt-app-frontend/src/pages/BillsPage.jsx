@@ -95,21 +95,21 @@ const BillsPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-gray-900">Kelola Tagihan Iuran</h2>
-        <p className="text-gray-600 mt-1">Buat tagihan iuran bulanan untuk semua warga yang menempati rumah.</p>
+        <h2 className="text-h2-mobile md:text-h2-md lg:text-h2-lg font-heading font-bold text-gray-900">Kelola Tagihan Iuran</h2>
+        <p className="text-body-mobile md:text-body-md text-gray-600 mt-1">Buat tagihan iuran bulanan untuk semua warga yang menempati rumah.</p>
       </div>
 
       <div className="bg-primary-50 p-6 rounded-xl border border-primary-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h3 className="text-lg font-semibold text-primary-900">Generate Tagihan Bulan Ini</h3>
-          <p className="text-primary-700 mt-1 text-sm max-w-2xl">
+          <h3 className="text-h3-mobile md:text-h3-md font-heading font-semibold text-primary-900">Generate Tagihan Bulan Ini</h3>
+          <p className="text-body-mobile md:text-body-md text-primary-700 mt-1 max-w-2xl">
             Klik tombol di samping untuk membuat tagihan iuran Satpam & Kebersihan bulan ini. Sistem secara otomatis hanya akan menagih rumah yang sedang dihuni. Tagihan yang sudah ada untuk bulan ini akan dilewati.
           </p>
         </div>
         <button
           onClick={handleGenerate}
           disabled={isGenerating}
-          className="flex-shrink-0 px-6 py-2.5 bg-primary-600 hover:bg-primary-700 disabled:bg-primary-400 text-white font-medium rounded-lg shadow-sm transition-colors flex items-center justify-center min-w-[200px]"
+          className="flex-shrink-0 text-cta-mobile md:text-cta-md font-bold px-6 py-2.5 bg-primary-600 hover:bg-primary-700 disabled:bg-primary-400 text-white rounded-lg shadow-sm transition-colors flex items-center justify-center min-w-[200px]"
         >
           {isGenerating ? (
             <>
@@ -160,39 +160,39 @@ const BillsPage = () => {
 
       <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
-          <h3 className="text-lg font-semibold text-gray-900">Daftar Semua Tagihan</h3>
+          <h3 className="text-h3-mobile md:text-h3-md font-heading font-semibold text-gray-900">Daftar Semua Tagihan</h3>
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  <button type="button" onClick={() => requestSort('house.house_number')} className="group flex items-center focus:outline-none">
+                <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  <button type="button" onClick={() => requestSort('house.house_number')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                     Rumah {getSortIcon('house.house_number')}
                   </button>
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  <button type="button" onClick={() => requestSort('resident.name')} className="group flex items-center focus:outline-none">
+                <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  <button type="button" onClick={() => requestSort('resident.name')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                     Penghuni {getSortIcon('resident.name')}
                   </button>
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  <button type="button" onClick={() => requestSort('fee_type.name')} className="group flex items-center focus:outline-none">
+                <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  <button type="button" onClick={() => requestSort('fee_type.name')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                     Jenis Iuran {getSortIcon('fee_type.name')}
                   </button>
                 </th>
-                <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  <button type="button" onClick={() => requestSort('period_month')} className="group inline-flex items-center justify-center focus:outline-none">
+                <th scope="col" className="px-6 py-3 text-center text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  <button type="button" onClick={() => requestSort('period_month')} className="group inline-flex items-center justify-center focus:outline-none hover:text-primary-600 transition-colors">
                     Periode {getSortIcon('period_month')}
                   </button>
                 </th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  <button type="button" onClick={() => requestSort('amount')} className="group inline-flex items-center justify-end w-full focus:outline-none">
+                <th scope="col" className="px-6 py-3 text-right text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  <button type="button" onClick={() => requestSort('amount')} className="group inline-flex items-center justify-end w-full focus:outline-none hover:text-primary-600 transition-colors">
                     Nominal {getSortIcon('amount')}
                   </button>
                 </th>
-                <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  <button type="button" onClick={() => requestSort('status')} className="group inline-flex items-center justify-center focus:outline-none">
+                <th scope="col" className="px-6 py-3 text-center text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  <button type="button" onClick={() => requestSort('status')} className="group inline-flex items-center justify-center focus:outline-none hover:text-primary-600 transition-colors">
                     Status {getSortIcon('status')}
                   </button>
                 </th>
