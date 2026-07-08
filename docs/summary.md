@@ -35,4 +35,17 @@ Halaman yang menampilkan laporan mendetail per bulan. Terdapat pemisahan (tab) a
 Desain relasi tabel database untuk aplikasi SmartRT.
 ![ERD](erd/erd.png)
 
-*(File mentahan ERD dapat dilihat pada [erd.drawio](erd/erd.drawio))*
+### Penjelasan Relasi Antar Tabel
+
+1. **`rt_house_t` & `rt_resident_t` (Many-to-Many)**
+   - **Tabel Pivot:** `rt_house_resident_history_t`
+   - **Alasan:** Sebuah rumah bisa dihuni oleh banyak warga secara bergantian dari waktu ke waktu (misal: warga lama pindah, warga baru masuk kontrak). Sebaliknya, seorang warga juga bisa saja pindah dari satu unit rumah ke unit rumah lain di perumahan yang sama. Tabel pivot ini digunakan untuk melacak **riwayat** kapan seseorang mulai menetap (`start_date`) dan kapan dia keluar (`end_date`). Jika `end_date` kosong (null), artinya warga tersebut adalah penghuni aktif saat ini.
+
+2. **`rt_payment_transaction_t` & `rt_bill_t` (Many-to-Many)**
+   - **Tabel Pivot:** `rt_payment_transaction_bill_t`
+   - **Alasan:** Satu kali transaksi pembayaran bisa digunakan untuk melunasi **banyak tagihan sekaligus**. Misalnya, seorang warga membayar iuran Satpam dan Kebersihan sekaligus untuk 12 bulan ke depan (total 24 tagihan dilunasi dalam 1 struk transaksi). Penggunaan *pivot table* membuat sistem sangat fleksibel dalam mencatat tagihan mana saja yang dibayar dalam satu waktu.
+
+3. **Relasi One-to-Many Lainnya**
+   - **`rt_house_t` ke `rt_bill_t`**: Satu rumah akan memiliki banyak lembar tagihan seiring berjalannya bulan.
+   - **`rt_fee_type_t` ke `rt_bill_t`**: Satu jenis iuran (misal: Satpam) akan tercatat di banyak lembar tagihan milik berbagai rumah.
+   - **`rt_resident_t` ke `rt_payment_transaction_t`**: Seorang warga akan melakukan banyak transaksi pembayaran selama dia tinggal di perumahan tersebut.
