@@ -5,7 +5,7 @@ import { useSortableData } from "../hooks/useSortableData";
 
 const PaymentsPage = () => {
   const [allUnpaidBills, setAllUnpaidBills] = useState([]);
-  const [selectedGroup, setSelectedGroup] = useState(null);
+  const [selectedResidentId, setSelectedResidentId] = useState(null);
   const [selectedBills, setSelectedBills] = useState([]);
   const paymentFormRef = useRef(null);
 
@@ -40,6 +40,7 @@ const PaymentsPage = () => {
   }, {});
 
   const groupedArray = Object.values(groupedUnpaid);
+  const selectedGroup = selectedResidentId && groupedUnpaid[selectedResidentId] ? groupedUnpaid[selectedResidentId] : null;
   const { items: sortedGroups, requestSort, sortConfig } = useSortableData(groupedArray, { key: 'resident.name', direction: 'ascending' });
 
   const getSortIcon = (key) => {
@@ -65,14 +66,14 @@ const PaymentsPage = () => {
   };
 
   const handleSelectGroup = (group) => {
-    setSelectedGroup(group);
+    setSelectedResidentId(group.resident.id);
     setSelectedBills([]); // Reset checkbox
     // Auto-scroll ke form agar pengguna yang scroll ke bawah bisa langsung melihat form di atas
     setTimeout(() => paymentFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
   };
 
   const handleCancelPayment = () => {
-    setSelectedGroup(null);
+    setSelectedResidentId(null);
     setSelectedBills([]);
   };
 
@@ -147,7 +148,7 @@ const PaymentsPage = () => {
         icon: "success",
         confirmButtonText: "Selesai"
       });
-      setSelectedGroup(null);
+      // Biarkan form tetap terbuka. Jika tagihan lunas semua, form akan otomatis hilang.
       setSelectedBills([]);
       fetchAllUnpaid(); // Refresh data
     } catch (error) {
