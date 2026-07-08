@@ -129,8 +129,8 @@ const BillsPage = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
           <div>
-            <p className="text-sm font-medium text-gray-500">Progres Bulan Ini</p>
-            <p className="text-2xl font-bold text-gray-900 mt-1">{paidBillsThisMonth} / {totalBillsThisMonth} <span className="text-sm font-normal text-gray-500">Lunas</span></p>
+            <p className="text-sm font-medium text-gray-500">Pembayaran Bulan Ini</p>
+            <p className="text-2xl font-bold text-gray-900 mt-1">{paidBillsThisMonth} <span className="text-sm font-normal text-gray-500">dari {totalBillsThisMonth} Tagihan Lunas</span></p>
           </div>
           <div className="p-3 bg-emerald-50 rounded-lg">
             <svg className="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -139,8 +139,8 @@ const BillsPage = () => {
 
         <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
           <div>
-            <p className="text-sm font-medium text-gray-500">Tunggakan (Semua Waktu)</p>
-            <p className="text-2xl font-bold text-rose-600 mt-1">{unpaidOverall.length} <span className="text-sm font-normal text-rose-500">Tagihan</span></p>
+            <p className="text-sm font-medium text-gray-500">Total Tagihan Belum Lunas</p>
+            <p className="text-2xl font-bold text-rose-600 mt-1">{unpaidOverall.length} <span className="text-sm font-normal text-rose-500">Tagihan (Semua Waktu)</span></p>
           </div>
           <div className="p-3 bg-rose-50 rounded-lg">
             <svg className="w-6 h-6 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
