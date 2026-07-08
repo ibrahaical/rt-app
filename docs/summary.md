@@ -7,7 +7,6 @@ Dokumen ini memuat rangkuman fitur-fitur yang telah diselesaikan untuk memenuhi 
 ## 1. Dashboard & Ringkasan Keuangan
 Halaman utama yang menampilkan ringkasan data rumah (total unit, yang dihuni, dan kosong), keuangan bulan berjalan, serta **Grafik Keuangan selama 1 Tahun**.
 ![Dashboard](screenshots/01-dashboard.png)
-![Dashboard Grafik](screenshots/10-dashboard-grafik.png)
 
 ## 2. Mengelola Rumah
 Halaman pendataan unit rumah. Masing-masing rumah memiliki halaman detail yang menyimpan riwayat siapa saja yang pernah/sedang menghuni, serta riwayat tagihan dan pembayaran rumah tersebut.
@@ -17,7 +16,6 @@ Halaman pendataan unit rumah. Masing-masing rumah memiliki halaman detail yang m
 ## 3. Mengelola Penghuni
 Halaman pengelolaan data warga (tetap maupun kontrak). Termasuk kelengkapan data seperti Nama Lengkap, Foto KTP, No. Telepon, dan Status Pernikahan.
 ![Data Penghuni](screenshots/03-data-penghuni.png)
-![Form Penghuni](screenshots/04-form-penghuni.png)
 
 ## 4. Mengelola Pembayaran (Iuran)
 Sistem memfasilitasi pembuatan dan pelunasan tagihan. Termasuk fitur canggih untuk mencetak sekaligus melunasi iuran warga selama 1 tahun (dibayar di muka).
