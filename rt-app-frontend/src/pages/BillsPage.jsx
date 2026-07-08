@@ -27,7 +27,7 @@ const BillsPage = () => {
   const totalBillsThisMonth = thisMonthBills.length;
   const paidBillsThisMonth = thisMonthBills.filter(b => b.status === 'lunas').length;
   const unpaidBillsThisMonth = totalBillsThisMonth - paidBillsThisMonth;
-  
+
   const unpaidOverall = bills.filter(b => b.status !== 'lunas');
   const totalAmountUnpaid = unpaidOverall.reduce((sum, b) => sum + parseInt(b.amount || 0), 0);
 
@@ -60,7 +60,7 @@ const BillsPage = () => {
     try {
       // Hit POST /bills/generate sesuai instruksi
       const response = await api.post("/bills/generate");
-      
+
       let message = "";
       if (response.data.created > 0 && response.data.skipped === 0) {
         message = "Sukses! Tagihan bulan ini telah berhasil diterbitkan untuk semua rumah yang ada penghuninya.";
@@ -106,8 +106,8 @@ const BillsPage = () => {
             Klik tombol di samping untuk membuat tagihan iuran Satpam & Kebersihan bulan ini. Sistem secara otomatis hanya akan menagih rumah yang sedang dihuni. Tagihan yang sudah ada untuk bulan ini akan dilewati.
           </p>
         </div>
-        <button 
-          onClick={handleGenerate} 
+        <button
+          onClick={handleGenerate}
           disabled={isGenerating}
           className="flex-shrink-0 px-6 py-2.5 bg-primary-600 hover:bg-primary-700 disabled:bg-primary-400 text-white font-medium rounded-lg shadow-sm transition-colors flex items-center justify-center min-w-[200px]"
         >
@@ -136,7 +136,7 @@ const BillsPage = () => {
             <svg className="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
           </div>
         </div>
-        
+
         <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-500">Tunggakan (Semua Waktu)</p>

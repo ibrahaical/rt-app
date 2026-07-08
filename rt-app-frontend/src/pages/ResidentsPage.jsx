@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import api from "../api";
 import Swal from "sweetalert2";
 import { useSortableData } from "../hooks/useSortableData";
+import { PhoneInput, defaultCountries } from 'react-international-phone';
+import 'react-international-phone/style.css';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 const ResidentsPage = () => {
   const [residents, setResidents] = useState([]);
@@ -175,16 +178,27 @@ const ResidentsPage = () => {
                 </div>
                 <div>
                   <label htmlFor="resident-phone" className="block text-sm font-medium text-gray-700 mb-1">No. HP</label>
-                  <input
-                    id="resident-phone"
-                    type="text"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-colors"
-                    placeholder="Misal: 08123456789"
-                  />
+                  <div className="flex items-center w-full border border-gray-300 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-primary-500 focus-within:border-primary-500 transition-colors bg-white">
+                    <div className="px-4 py-2 bg-gray-50 border-r border-gray-200 text-gray-600 font-medium select-none">
+                      +62
+                    </div>
+                    <input
+                      type="tel"
+                      id="resident-phone"
+                      name="phone"
+                      value={formData.phone ? formData.phone.replace(/^\+62\s*/, '') : ''}
+                      onChange={(e) => {
+                        let val = e.target.value.replace(/[^\d\s-]/g, '');
+                        if (val.startsWith('0')) {
+                          val = val.substring(1);
+                        }
+                        setFormData({ ...formData, phone: val ? '+62' + val.replace(/[\s-]/g, '') : '' });
+                      }}
+                      required
+                      placeholder="812 3456 7890"
+                      className="w-full px-4 py-2 border-0 outline-none focus:ring-0"
+                    />
+                  </div>
                 </div>
                 <div>
                   <label htmlFor="resident-type" className="block text-sm font-medium text-gray-700 mb-1">Status Penghuni</label>
@@ -352,7 +366,14 @@ const ResidentsPage = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                      {resident.phone}
+                      {(() => {
+                        try {
+                          const phoneNumber = parsePhoneNumberFromString(resident.phone);
+                          return phoneNumber ? phoneNumber.formatInternational() : resident.phone;
+                        } catch (e) {
+                          return resident.phone;
+                        }
+                      })()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${
