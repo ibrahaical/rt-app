@@ -107,5 +107,10 @@ npm run dev
 3. Klik tombol **"Generate Tagihan"**. Aplikasi secara otomatis akan membuatkan tagihan Rp115.000 (Satpam + Kebersihan) untuk semua rumah yang ada penghuninya di bulan berjalan.
 4. Buka halaman **Dashboard** untuk melihat pergerakan keuangan secara *real-time*.
 
+## 📄 Laporan & Screenshot (Output Tugas)
+Untuk memudahkan proses *review* terhadap penyelesaian tugas, saya telah merangkum semua screenshot fitur aplikasi (Dashboard, Rumah, Penghuni, Pembayaran, Laporan) beserta kelengkapan file ERD ke dalam satu dokumen terpusat.
+
+👉 **Silakan lihat laporan lengkapnya di: [docs/summary.md](docs/summary.md)**
+
 ---
 *Dikembangkan untuk menyelesaikan studi kasus Skill Fit Test Full Stack Programmer.*
