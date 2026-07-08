@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class House extends Model
 {
+    protected $table = 'rt_house_t';
     protected $fillable = [
         'house_number',
         'status',

@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('expenses', function (Blueprint $table) {
+        Schema::create('rt_expense_t', function (Blueprint $table) {
             $table->id();
             $table->string('title'); // Gaji Satpam, Token Listrik, Perbaikan Jalan, dll
             $table->unsignedInteger('amount');
@@ -20,6 +20,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('expenses');
+        Schema::dropIfExists('rt_expense_t');
     }
 };

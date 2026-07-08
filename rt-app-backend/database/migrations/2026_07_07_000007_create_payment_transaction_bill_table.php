@@ -8,18 +8,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('payment_transaction_bill', function (Blueprint $table) {
+        Schema::create('rt_payment_transaction_bill_t', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('payment_transaction_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('bill_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('payment_transaction_id')->constrained('rt_payment_transaction_t')->cascadeOnDelete();
+            $table->foreignId('bill_id')->constrained('rt_bill_t')->cascadeOnDelete();
             $table->timestamps();
 
-            $table->unique(['payment_transaction_id', 'bill_id']);
+            $table->unique(['payment_transaction_id', 'bill_id'], 'ptb_unique');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('payment_transaction_bill');
+        Schema::dropIfExists('rt_payment_transaction_bill_t');
     }
 };

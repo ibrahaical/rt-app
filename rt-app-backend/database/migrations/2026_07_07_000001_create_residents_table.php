@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('residents', function (Blueprint $table) {
+        Schema::create('rt_resident_t', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('ktp_photo')->nullable(); // path file upload foto KTP
@@ -21,6 +21,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('residents');
+        Schema::dropIfExists('rt_resident_t');
     }
 };

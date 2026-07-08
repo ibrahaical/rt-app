@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PaymentTransaction extends Model
 {
+    protected $table = 'rt_payment_transaction_t';
     protected $fillable = ['resident_id', 'house_id', 'paid_at', 'total_amount', 'notes'];
 
     protected $casts = [
@@ -14,7 +15,7 @@ class PaymentTransaction extends Model
 
     public function bills()
     {
-        return $this->belongsToMany(Bill::class, 'payment_transaction_bill');
+        return $this->belongsToMany(Bill::class, 'rt_payment_transaction_bill_t');
     }
 
     public function resident()

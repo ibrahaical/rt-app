@@ -13,10 +13,10 @@ class PaymentTransactionController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'resident_id' => 'required|exists:residents,id',
-            'house_id' => 'required|exists:houses,id',
+            'resident_id' => 'required|exists:rt_resident_t,id',
+            'house_id' => 'required|exists:rt_house_t,id',
             'bill_ids' => 'required|array|min:1',
-            'bill_ids.*' => 'exists:bills,id',
+            'bill_ids.*' => 'exists:rt_bill_t,id',
             'notes' => 'nullable|string'
         ]);
 

@@ -59,7 +59,7 @@ class BillController extends Controller
     public function generateAdvance(Request $request)
     {
         $request->validate([
-            'resident_id' => 'required|exists:residents,id',
+            'resident_id' => 'required|exists:rt_resident_t,id',
         ]);
 
         $resident = \App\Models\Resident::with('currentHouseHistory.house')->findOrFail($request->resident_id);

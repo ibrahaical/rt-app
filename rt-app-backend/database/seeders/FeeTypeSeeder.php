@@ -9,7 +9,7 @@ class FeeTypeSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('fee_types')->insert([
+        DB::table('rt_fee_type_t')->insert([
             [
                 'name' => 'Satpam',
                 'code' => 'satpam',

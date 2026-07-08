@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('fee_types', function (Blueprint $table) {
+        Schema::create('rt_fee_type_t', function (Blueprint $table) {
             $table->id();
             $table->string('name');        // Satpam, Kebersihan
             $table->string('code')->unique(); // satpam, kebersihan
@@ -19,6 +19,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('fee_types');
+        Schema::dropIfExists('rt_fee_type_t');
     }
 };

@@ -8,11 +8,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('bills', function (Blueprint $table) {
+        Schema::create('rt_bill_t', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('house_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('resident_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('fee_type_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('house_id')->constrained('rt_house_t')->cascadeOnDelete();
+            $table->foreignId('resident_id')->constrained('rt_resident_t')->cascadeOnDelete();
+            $table->foreignId('fee_type_id')->constrained('rt_fee_type_t')->cascadeOnDelete();
             $table->unsignedTinyInteger('period_month'); // 1-12
             $table->unsignedSmallInteger('period_year');
             $table->unsignedInteger('amount'); // snapshot nominal saat tagihan dibuat
@@ -29,6 +29,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('bills');
+        Schema::dropIfExists('rt_bill_t');
     }
 };

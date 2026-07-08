@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Resident extends Model
 {
+    protected $table = 'rt_resident_t';
     protected $fillable = [
         'name',
         'ktp_photo',

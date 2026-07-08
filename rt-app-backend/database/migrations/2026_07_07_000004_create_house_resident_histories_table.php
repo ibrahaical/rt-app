@@ -8,10 +8,10 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('house_resident_histories', function (Blueprint $table) {
+        Schema::create('rt_house_resident_history_t', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('house_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('resident_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('house_id')->constrained('rt_house_t')->cascadeOnDelete();
+            $table->foreignId('resident_id')->constrained('rt_resident_t')->cascadeOnDelete();
             $table->date('start_date');
             $table->date('end_date')->nullable(); // null = sedang menghuni sekarang
             $table->timestamps();
@@ -22,6 +22,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('house_resident_histories');
+        Schema::dropIfExists('rt_house_resident_history_t');
     }
 };

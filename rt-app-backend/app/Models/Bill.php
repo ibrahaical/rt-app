@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bill extends Model
 {
+    protected $table = 'rt_bill_t';
     protected $fillable = [
         'house_id',
         'resident_id',

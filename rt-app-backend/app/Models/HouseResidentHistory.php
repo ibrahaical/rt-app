@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class HouseResidentHistory extends Model
 {
+    protected $table = 'rt_house_resident_history_t';
     protected $fillable = [
         'house_id',
         'resident_id',

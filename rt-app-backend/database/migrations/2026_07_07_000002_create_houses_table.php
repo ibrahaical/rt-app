@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('houses', function (Blueprint $table) {
+        Schema::create('rt_house_t', function (Blueprint $table) {
             $table->id();
             $table->string('house_number')->unique(); // contoh: A1, B12
             // status di-cache di sini untuk query cepat, tapi sumber kebenarannya
@@ -21,6 +21,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('houses');
+        Schema::dropIfExists('rt_house_t');
     }
 };

@@ -21,7 +21,7 @@ class HouseController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'house_number' => 'required|string|max:50|unique:houses,house_number',
+            'house_number' => 'required|string|max:50|unique:rt_house_t,house_number',
         ]);
 
         $house = House::create($validated + ['status' => 'tidak_dihuni']);
@@ -37,7 +37,7 @@ class HouseController extends Controller
     public function update(Request $request, House $house)
     {
         $validated = $request->validate([
-            'house_number' => 'sometimes|required|string|max:50|unique:houses,house_number,' . $house->id,
+            'house_number' => 'sometimes|required|string|max:50|unique:rt_house_t,house_number,' . $house->id,
         ]);
 
         $house->update($validated);
@@ -57,7 +57,7 @@ class HouseController extends Controller
     public function assignResident(Request $request, House $house)
     {
         $validated = $request->validate([
-            'resident_id' => 'required|exists:residents,id',
+            'resident_id' => 'required|exists:rt_resident_t,id',
             'start_date' => 'nullable|date',
         ]);
 
