@@ -43,7 +43,7 @@ cd rt-app-backend
 # Instal dependensi PHP
 composer install
 
-# Salin file konfigurasi environment
+# Salin file konfigurasi environment (jika menggunakan CMD Windows, gunakan: copy .env.example .env)
 cp .env.example .env
 
 # Buat App Key Laravel
@@ -87,8 +87,8 @@ php artisan serve
 Buka terminal **baru** (biarkan terminal backend tetap berjalan), lalu jalankan:
 
 ```bash
-# Kembali ke root folder, lalu masuk ke folder frontend
-cd rt-app/rt-app-frontend
+# Pastikan Anda berada di folder utama (rt-app), lalu masuk ke folder frontend
+cd rt-app-frontend
 
 # Instal dependensi JavaScript (React, Tailwind, Framer Motion, dsb)
 npm install
