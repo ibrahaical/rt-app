@@ -66,6 +66,11 @@ class ReportController extends Controller
 
         $months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'];
 
+        // Saldo kumulatif awal sebelum tahun yang dipilih
+        $initialIncome = PaymentTransaction::whereYear('paid_at', '<', $year)->sum('total_amount');
+        $initialExpense = Expense::whereYear('expense_date', '<', $year)->sum('amount');
+        $runningBalance = $initialIncome - $initialExpense;
+
         for ($i = 1; $i <= 12; $i++) {
             $income = PaymentTransaction::whereMonth('paid_at', $i)
                 ->whereYear('paid_at', $year)
@@ -75,10 +80,13 @@ class ReportController extends Controller
                 ->whereYear('expense_date', $year)
                 ->sum('amount');
 
+            $runningBalance += ($income - $expense);
+
             $chartData[] = [
                 'bulan' => $months[$i - 1],
                 'pemasukan' => $income,
                 'pengeluaran' => $expense,
+                'saldo' => $runningBalance,
             ];
         }
 

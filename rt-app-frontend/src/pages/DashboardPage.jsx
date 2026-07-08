@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import api from "../api";
 import {
-  BarChart,
+  ComposedChart,
   Bar,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -47,12 +48,13 @@ const DashboardPage = () => {
   );
 
   const formatRp = (num) => `Rp ${parseInt(num).toLocaleString("id-ID")}`;
+  const monthName = new Date(selectedYear, selectedMonth - 1, 1).toLocaleString('id-ID', { month: 'long' });
 
   return (
     <div className="space-y-8">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-h2-mobile md:text-h2-md lg:text-h2-lg font-heading font-bold text-gray-900">Dashboard SmartRT</h2>
+          <h2 className="text-h2-mobile md:text-h2-md lg:text-h2-lg font-heading font-bold text-gray-900">Dashboard {monthName} {selectedYear}</h2>
           <p className="text-body-mobile md:text-body-md text-gray-600 mt-1">Ringkasan data dan keuangan RT.</p>
         </div>
         
@@ -87,14 +89,23 @@ const DashboardPage = () => {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h4 className="text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Total Saldo Kas RT</h4>
-              <div className="p-2 bg-emerald-50 rounded-lg" aria-hidden="true">
-                <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <h4 className="text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Status Rumah</h4>
+              <div className="p-2 bg-indigo-50 rounded-lg" aria-hidden="true">
+                <svg className="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
               </div>
             </div>
-            <h2 className="text-h2-mobile md:text-h2-md lg:text-h2-lg font-heading font-bold text-emerald-600">
-              {formatRp(dashboardData.financial_total.balance)}
-            </h2>
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-gray-600">Total:</span>
+              <span className="font-semibold">{dashboardData.houses.total} Unit</span>
+            </div>
+            <div className="flex items-center justify-between text-sm mt-1">
+              <span className="text-emerald-600">Dihuni:</span>
+              <span className="font-semibold text-emerald-700">{dashboardData.houses.dihuni}</span>
+            </div>
+            <div className="flex items-center justify-between text-sm mt-1">
+              <span className="text-rose-600">Kosong:</span>
+              <span className="font-semibold text-rose-700">{dashboardData.houses.kosong}</span>
+            </div>
           </div>
         </div>
 
@@ -129,23 +140,14 @@ const DashboardPage = () => {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h4 className="text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Status Rumah</h4>
-              <div className="p-2 bg-indigo-50 rounded-lg" aria-hidden="true">
-                <svg className="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+              <h4 className="text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Saldo Bulan Ini</h4>
+              <div className="p-2 bg-emerald-50 rounded-lg" aria-hidden="true">
+                <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
               </div>
             </div>
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-600">Total:</span>
-              <span className="font-semibold">{dashboardData.houses.total} Unit</span>
-            </div>
-            <div className="flex items-center justify-between text-sm mt-1">
-              <span className="text-emerald-600">Dihuni:</span>
-              <span className="font-semibold text-emerald-700">{dashboardData.houses.dihuni}</span>
-            </div>
-            <div className="flex items-center justify-between text-sm mt-1">
-              <span className="text-rose-600">Kosong:</span>
-              <span className="font-semibold text-rose-700">{dashboardData.houses.kosong}</span>
-            </div>
+            <h2 className="text-h2-mobile md:text-h2-md lg:text-h2-lg font-heading font-bold text-emerald-600">
+              {formatRp(dashboardData.financial_month.balance)}
+            </h2>
           </div>
         </div>
       </div>
@@ -155,7 +157,7 @@ const DashboardPage = () => {
         <h3 className="text-h3-mobile md:text-h3-md font-heading font-bold text-gray-900 mb-6">Grafik Keuangan Tahun {selectedYear}</h3>
         <div className="w-full h-80">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart
+            <ComposedChart
               data={chartData}
               margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
             >
@@ -175,7 +177,8 @@ const DashboardPage = () => {
               <Legend wrapperStyle={{ paddingTop: '20px' }} />
               <Bar dataKey="pemasukan" name="Pemasukan" fill="#2563eb" radius={[4, 4, 0, 0]} />
               <Bar dataKey="pengeluaran" name="Pengeluaran" fill="#e11d48" radius={[4, 4, 0, 0]} />
-            </BarChart>
+              <Line type="monotone" dataKey="saldo" name="Saldo Sisa" stroke="#10b981" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+            </ComposedChart>
           </ResponsiveContainer>
         </div>
       </div>

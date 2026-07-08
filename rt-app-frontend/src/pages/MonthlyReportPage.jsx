@@ -61,6 +61,33 @@ const MonthlyReportPage = () => {
         </div>
       </div>
 
+      {/* Ringkasan Bulan Ini */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between hover:border-blue-200 transition-colors">
+          <div>
+            <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Total Pemasukan</p>
+            <p className="text-2xl md:text-3xl font-heading font-bold text-blue-600">Rp {totalIncome.toLocaleString('id-ID')}</p>
+          </div>
+          <div className="w-12 h-12 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center shrink-0 border border-blue-100">
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+          </div>
+        </div>
+
+        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between hover:border-rose-200 transition-colors">
+          <div>
+            <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Total Pengeluaran</p>
+            <p className="text-2xl md:text-3xl font-heading font-bold text-rose-600">Rp {totalExpense.toLocaleString('id-ID')}</p>
+          </div>
+          <div className="w-12 h-12 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center shrink-0 border border-rose-100">
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
       {/* Tabs Navigasi */}
       <div className="flex border-b border-gray-200">
         <button
