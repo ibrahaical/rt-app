@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import api from "../api";
 import Swal from "sweetalert2";
 
@@ -22,6 +22,7 @@ const PaymentsPage = () => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
     fetchAllResidents();
   }, []);
 
@@ -36,6 +37,7 @@ const PaymentsPage = () => {
 
   useEffect(() => {
     if (selectedResidentId) {
+      // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/set-state-in-effect
       fetchResidentBills(selectedResidentId);
     } else {
       setSelectedResidentBills([]);
@@ -260,9 +262,9 @@ const PaymentsPage = () => {
                     />
                   </a>
                 ) : (
-                  <div className="w-full aspect-[8/5] rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex flex-col items-center justify-center font-bold shadow-sm">
-                    <span className="text-4xl mb-2">{selectedGroup.resident.name.charAt(0)}</span>
-                    <span className="text-xs text-indigo-400 font-medium uppercase tracking-wider">No KTP</span>
+                  <div className="w-full aspect-[8/5] rounded-xl bg-gray-100 border border-gray-200 text-gray-500 flex flex-col items-center justify-center font-bold shadow-sm">
+                    <span className="text-4xl mb-2 text-primary-600">{selectedGroup.resident.name.charAt(0)}</span>
+                    <span className="text-xs text-gray-400 font-medium uppercase tracking-wider">No KTP</span>
                   </div>
                 )}
               </div>
@@ -271,7 +273,11 @@ const PaymentsPage = () => {
                 <div>
                   <h3 className="text-h2-mobile md:text-h2-md lg:text-h2-lg font-heading font-bold text-gray-900">{selectedGroup.resident.name}</h3>
                   <div className="flex flex-wrap items-center gap-3 mt-3">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-indigo-100 text-indigo-800 capitalize shadow-sm">
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold capitalize shadow-sm ${
+                      selectedGroup.resident.resident_type === 'tetap' 
+                        ? 'bg-primary-100 text-primary-800' 
+                        : 'bg-amber-100 text-amber-800'
+                    }`}>
                       Warga {selectedGroup.resident.resident_type}
                     </span>
                     <span className="flex items-center text-sm font-medium text-gray-700 bg-gray-100 px-3 py-1 rounded-full border border-gray-200 shadow-sm">

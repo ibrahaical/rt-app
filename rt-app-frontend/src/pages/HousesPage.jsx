@@ -193,7 +193,7 @@ const HousesPage = () => {
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         house.status === "dihuni" 
                           ? "bg-emerald-100 text-emerald-800" 
-                          : "bg-rose-100 text-rose-800"
+                          : "bg-amber-100 text-amber-800"
                       }`}>
                         {house.status === "dihuni" ? "Dihuni" : "Kosong"}
                       </span>

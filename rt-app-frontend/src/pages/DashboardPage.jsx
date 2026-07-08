@@ -113,11 +113,11 @@ const DashboardPage = () => {
           <div>
             <div className="flex items-center justify-between mb-3">
               <h4 className="text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Pemasukan Bulan Ini</h4>
-              <div className="p-2 bg-blue-50 rounded-lg" aria-hidden="true">
-                <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 11l5-5m0 0l5 5m-5-5v12" /></svg>
+              <div className="p-2 bg-primary-50 rounded-lg" aria-hidden="true">
+                <svg className="w-5 h-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 11l5-5m0 0l5 5m-5-5v12" /></svg>
               </div>
             </div>
-            <h3 className="text-h3-mobile md:text-h3-md font-heading font-bold text-blue-600">
+            <h3 className="text-h3-mobile md:text-h3-md font-heading font-bold text-primary-600">
               {formatRp(dashboardData.financial_month.income)}
             </h3>
           </div>
@@ -175,7 +175,7 @@ const DashboardPage = () => {
                 contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' }}
               />
               <Legend wrapperStyle={{ paddingTop: '20px' }} />
-              <Bar dataKey="pemasukan" name="Pemasukan" fill="#2563eb" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="pemasukan" name="Pemasukan" fill="#0284c7" radius={[4, 4, 0, 0]} />
               <Bar dataKey="pengeluaran" name="Pengeluaran" fill="#e11d48" radius={[4, 4, 0, 0]} />
               <Line type="monotone" dataKey="saldo" name="Saldo Sisa" stroke="#10b981" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
             </ComposedChart>

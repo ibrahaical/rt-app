@@ -119,7 +119,7 @@ const HouseDetailPage = () => {
             <div className="mt-2 flex items-center">
               <span className="text-gray-600 mr-2">Status Saat Ini:</span>
               <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                isOccupied ? "bg-emerald-100 text-emerald-800" : "bg-rose-100 text-rose-800"
+                isOccupied ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"
               }`}>
                 {isOccupied ? "Dihuni" : "Kosong"}
               </span>
@@ -299,8 +299,8 @@ const HouseDetailPage = () => {
                           {history.end_date ? (
                             new Date(history.end_date).toLocaleDateString("id-ID")
                           ) : (
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                              Sekarang
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                                Sekarang
                             </span>
                           )}
                         </td>

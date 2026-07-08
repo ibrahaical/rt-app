@@ -63,12 +63,12 @@ const MonthlyReportPage = () => {
 
       {/* Ringkasan Bulan Ini */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between hover:border-blue-200 transition-colors">
+        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between hover:border-emerald-200 transition-colors">
           <div>
             <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Total Pemasukan</p>
-            <p className="text-2xl md:text-3xl font-heading font-bold text-blue-600">Rp {totalIncome.toLocaleString('id-ID')}</p>
+            <p className="text-2xl md:text-3xl font-heading font-bold text-emerald-600">Rp {totalIncome.toLocaleString('id-ID')}</p>
           </div>
-          <div className="w-12 h-12 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center shrink-0 border border-blue-100">
+          <div className="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center shrink-0 border border-emerald-100">
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
             </svg>
@@ -93,7 +93,7 @@ const MonthlyReportPage = () => {
         <button
           className={`py-3 px-6 text-sm font-medium border-b-2 transition-colors ${
             activeTab === 'pemasukan' 
-              ? 'border-blue-600 text-blue-600' 
+              ? 'border-emerald-600 text-emerald-600' 
               : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
           }`}
           onClick={() => setActiveTab('pemasukan')}
@@ -117,8 +117,8 @@ const MonthlyReportPage = () => {
         {activeTab === 'pemasukan' && (
           <div className="space-y-4">
             <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-200 bg-blue-50 flex justify-between items-center">
-                <h3 className="text-h3-mobile md:text-h3-md font-heading font-semibold text-blue-900">Daftar Pemasukan (Iuran)</h3>
+              <div className="px-6 py-4 border-b border-gray-200 bg-emerald-50 flex justify-between items-center">
+                <h3 className="text-h3-mobile md:text-h3-md font-heading font-semibold text-emerald-900">Daftar Pemasukan (Iuran)</h3>
               </div>
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
@@ -150,13 +150,13 @@ const MonthlyReportPage = () => {
                             
                             {inc.bills && inc.bills.length > 0 && (
                               <details className="mt-2.5 group">
-                                <summary className="text-xs font-semibold text-blue-600 cursor-pointer select-none hover:text-blue-800 transition-colors list-none flex items-center">
+                                <summary className="text-xs font-semibold text-emerald-600 cursor-pointer select-none hover:text-emerald-800 transition-colors list-none flex items-center">
                                   <span>Rincian {inc.bills.length} Tagihan</span>
                                   <svg className="w-3.5 h-3.5 ml-1 transform group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                                   </svg>
                                 </summary>
-                                <div className="mt-2 space-y-1.5 pl-3 border-l-2 border-blue-200 py-1 max-h-48 overflow-y-auto custom-scrollbar">
+                                <div className="mt-2 space-y-1.5 pl-3 border-l-2 border-emerald-200 py-1 max-h-48 overflow-y-auto custom-scrollbar">
                                   {inc.bills.map(b => (
                                     <div key={b.id} className="text-xs flex justify-between items-center gap-4">
                                       <span className="text-gray-600">{b.fee_type?.name} <span className="text-gray-400">({b.period_month}/{b.period_year})</span></span>
@@ -167,7 +167,7 @@ const MonthlyReportPage = () => {
                               </details>
                             )}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-blue-600 text-right">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-emerald-600 text-right">
                             {formatRp(inc.total_amount)}
                           </td>
                         </tr>

@@ -300,7 +300,7 @@ const ResidentsPage = () => {
       <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
           <h3 className="text-h3-mobile md:text-h3-md font-heading font-semibold text-gray-900">Daftar Warga Terdaftar</h3>
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
             {residents.length} Orang
           </span>
         </div>
@@ -383,7 +383,7 @@ const ResidentsPage = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${
-                        resident.resident_type === 'tetap' ? 'bg-indigo-100 text-indigo-800' : 'bg-orange-100 text-orange-800'
+                        resident.resident_type === 'tetap' ? 'bg-primary-100 text-primary-800' : 'bg-amber-100 text-amber-800'
                       }`}>
                         {resident.resident_type}
                       </span>
