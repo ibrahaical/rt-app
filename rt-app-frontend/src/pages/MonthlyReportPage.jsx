@@ -97,6 +97,7 @@ const MonthlyReportPage = () => {
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-white">
                     <tr>
+                      <th scope="col" className="px-6 py-3 text-left w-12 text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">No.</th>
                       <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Tanggal</th>
                       <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Sumber</th>
                       <th scope="col" className="px-6 py-3 text-right text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Nominal</th>
@@ -105,11 +106,14 @@ const MonthlyReportPage = () => {
                   <tbody className="bg-white divide-y divide-gray-200">
                     {reportData.incomes.length === 0 ? (
                       <tr>
-                        <td colSpan="3" className="px-6 py-8 text-center text-sm text-gray-500">Tidak ada pemasukan bulan ini.</td>
+                        <td colSpan="4" className="px-6 py-8 text-center text-sm text-gray-500">Tidak ada pemasukan bulan ini.</td>
                       </tr>
                     ) : (
-                      reportData.incomes.map((inc) => (
+                      reportData.incomes.map((inc, index) => (
                         <tr key={inc.id} className="hover:bg-gray-50 transition-colors">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+                            {index + 1}
+                          </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {new Date(inc.paid_at).toLocaleDateString('id-ID')}
                           </td>
@@ -141,6 +145,7 @@ const MonthlyReportPage = () => {
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-white">
                     <tr>
+                      <th scope="col" className="px-6 py-3 text-left w-12 text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">No.</th>
                       <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Tanggal</th>
                       <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Keterangan</th>
                       <th scope="col" className="px-6 py-3 text-right text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Nominal</th>
@@ -149,11 +154,14 @@ const MonthlyReportPage = () => {
                   <tbody className="bg-white divide-y divide-gray-200">
                     {reportData.expenses.length === 0 ? (
                       <tr>
-                        <td colSpan="3" className="px-6 py-8 text-center text-sm text-gray-500">Tidak ada pengeluaran bulan ini.</td>
+                        <td colSpan="4" className="px-6 py-8 text-center text-sm text-gray-500">Tidak ada pengeluaran bulan ini.</td>
                       </tr>
                     ) : (
-                      reportData.expenses.map((exp) => (
+                      reportData.expenses.map((exp, index) => (
                         <tr key={exp.id} className="hover:bg-gray-50 transition-colors">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+                            {index + 1}
+                          </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {new Date(exp.expense_date).toLocaleDateString('id-ID')}
                           </td>

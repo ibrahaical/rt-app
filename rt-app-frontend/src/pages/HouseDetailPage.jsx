@@ -139,7 +139,7 @@ const HouseDetailPage = () => {
               {currentResident ? (
                 <div className="space-y-4">
                   <div className="flex flex-col gap-4">
-                    <div className="flex items-center gap-4">
+                    <div className="flex flex-col items-start gap-3">
                       {currentResident.resident?.ktp_photo ? (
                         <div className="flex-shrink-0">
                           <img 
@@ -272,6 +272,7 @@ const HouseDetailPage = () => {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
+                    <th scope="col" className="px-6 py-3 text-left w-12 text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">No.</th>
                     <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Nama Penghuni</th>
                     <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Tanggal Masuk</th>
                     <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Tanggal Keluar</th>
@@ -280,11 +281,14 @@ const HouseDetailPage = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {house.histories.length === 0 ? (
                     <tr>
-                      <td colSpan="3" className="px-6 py-4 text-center text-sm text-gray-500">Belum ada riwayat penghuni.</td>
+                      <td colSpan="4" className="px-6 py-4 text-center text-sm text-gray-500">Belum ada riwayat penghuni.</td>
                     </tr>
                   ) : (
-                    house.histories.map((history) => (
+                    house.histories.map((history, index) => (
                       <tr key={history.id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+                          {index + 1}
+                        </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           {history.resident?.name}
                         </td>
@@ -317,6 +321,7 @@ const HouseDetailPage = () => {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
+                    <th scope="col" className="px-6 py-3 text-left w-12 text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">No.</th>
                     <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Periode</th>
                     <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Jenis Iuran</th>
                     <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">Penghuni</th>
@@ -326,8 +331,11 @@ const HouseDetailPage = () => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {house.bills && house.bills.length > 0 ? (
-                    house.bills.map((bill) => (
+                    house.bills.map((bill, index) => (
                       <tr key={bill.id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+                          {index + 1}
+                        </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
                           {bill.period_month} / {bill.period_year}
                         </td>
@@ -353,7 +361,7 @@ const HouseDetailPage = () => {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="5" className="px-6 py-4 text-center text-sm text-gray-500">
+                      <td colSpan="6" className="px-6 py-4 text-center text-sm text-gray-500">
                         Belum ada riwayat tagihan.
                       </td>
                     </tr>

@@ -152,6 +152,9 @@ const ExpensesPage = () => {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
+                    <th scope="col" className="px-6 py-3 text-left w-12 text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                      No.
+                    </th>
                     <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
                       <button type="button" onClick={() => requestSort('expense_date')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                         Tanggal {getSortIcon('expense_date')}
@@ -172,7 +175,7 @@ const ExpensesPage = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {expenses.length === 0 ? (
                     <tr>
-                      <td colSpan="3" className="px-6 py-8 text-center text-sm text-gray-500">
+                      <td colSpan="4" className="px-6 py-8 text-center text-sm text-gray-500">
                         <svg className="mx-auto h-12 w-12 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
@@ -180,8 +183,11 @@ const ExpensesPage = () => {
                       </td>
                     </tr>
                   ) : (
-                    sortedExpenses.map((exp) => (
+                    sortedExpenses.map((exp, index) => (
                       <tr key={exp.id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+                          {index + 1}
+                        </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {new Date(exp.expense_date).toLocaleDateString("id-ID")}
                         </td>

@@ -308,6 +308,9 @@ const ResidentsPage = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
+                <th scope="col" className="px-6 py-3 text-left w-12 text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  No.
+                </th>
                 <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
                   <button type="button" onClick={() => requestSort('name')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                     Profil / KTP {getSortIcon('name')}
@@ -334,7 +337,7 @@ const ResidentsPage = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {residents.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="px-6 py-12 text-center">
+                  <td colSpan="6" className="px-6 py-12 text-center">
                     <svg className="mx-auto h-12 w-12 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
@@ -343,10 +346,13 @@ const ResidentsPage = () => {
                   </td>
                 </tr>
               ) : (
-                sortedResidents.map((resident) => (
+                sortedResidents.map((resident, index) => (
                   <tr key={resident.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+                      {index + 1}
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
+                      <div className="flex flex-col items-start gap-2">
                         <div className="flex-shrink-0 w-16 h-10">
                           {resident.ktp_photo ? (
                             <img
@@ -360,7 +366,7 @@ const ResidentsPage = () => {
                             </div>
                           )}
                         </div>
-                        <div className="ml-4">
+                        <div>
                           <div className="text-sm font-medium text-gray-900">{resident.name}</div>
                         </div>
                       </div>

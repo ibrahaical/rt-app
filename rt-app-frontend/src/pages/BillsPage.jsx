@@ -166,6 +166,9 @@ const BillsPage = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
+                <th scope="col" className="px-6 py-3 text-left w-12 text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  No.
+                </th>
                 <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
                   <button type="button" onClick={() => requestSort('house.house_number')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                     Rumah {getSortIcon('house.house_number')}
@@ -201,13 +204,16 @@ const BillsPage = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {bills.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="px-6 py-8 text-center text-sm text-gray-500">
+                  <td colSpan="7" className="px-6 py-8 text-center text-sm text-gray-500">
                     Belum ada tagihan. Silakan klik tombol generate di atas.
                   </td>
                 </tr>
               ) : (
-                sortedBills.map((bill) => (
+                sortedBills.map((bill, index) => (
                   <tr key={bill.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+                      {index + 1}
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       Blok {bill.house?.house_number}
                     </td>

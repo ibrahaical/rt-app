@@ -341,6 +341,9 @@ const PaymentsPage = () => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
+                  <th scope="col" className="px-6 py-3 text-left w-12 text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
+                    No.
+                  </th>
                   <th scope="col" className="px-6 py-3 text-left text-label-mobile md:text-label-md lg:text-label-lg font-accent font-semibold uppercase tracking-[0.2em] text-gray-500">
                     <button type="button" onClick={() => requestSort('resident.name')} className="group flex items-center focus:outline-none hover:text-primary-600 transition-colors">
                       Nama Warga {getSortIcon('resident.name')}
@@ -358,13 +361,16 @@ const PaymentsPage = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {sortedGroups.map((group) => (
+                {sortedGroups.map((group, index) => (
                   <tr 
                     key={group.resident.id} 
                     className={`hover:bg-gray-50 transition-colors ${
                       selectedGroup?.resident.id === group.resident.id ? 'bg-primary-50/50' : ''
                     }`}
                   >
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+                      {index + 1}
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-semibold text-gray-900">{group.resident.name}</div>
                     </td>
