@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import api from "../api";
 import Swal from "sweetalert2";
 import { useSortableData } from "../hooks/useSortableData";
@@ -7,6 +7,7 @@ const PaymentsPage = () => {
   const [allUnpaidBills, setAllUnpaidBills] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [selectedBills, setSelectedBills] = useState([]);
+  const paymentFormRef = useRef(null);
 
   const fetchAllUnpaid = async () => {
     try {
@@ -66,8 +67,8 @@ const PaymentsPage = () => {
   const handleSelectGroup = (group) => {
     setSelectedGroup(group);
     setSelectedBills([]); // Reset checkbox
-    // Scroll to top to see form
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Auto-scroll ke form agar pengguna yang scroll ke bawah bisa langsung melihat form di atas
+    setTimeout(() => paymentFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
   };
 
   const handleCancelPayment = () => {
@@ -176,43 +177,82 @@ const PaymentsPage = () => {
       {/* Form Pembayaran (Hanya Muncul Jika Warga Dipilih) */}
       {selectedGroup && (
         <form
+          ref={paymentFormRef}
           onSubmit={handlePayment}
-          className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden mb-8"
+          className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden mb-8 scroll-mt-6"
         >
-          <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900">Proses Pembayaran: {selectedGroup.resident.name}</h3>
-              <p className="text-sm text-gray-500 mt-0.5">Pilih tagihan yang akan dilunasi saat ini.</p>
+          <div className="px-6 py-6 border-b border-gray-200 bg-white">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+              {/* KTP Photo Column */}
+              <div className="md:col-span-4 lg:col-span-3">
+                {selectedGroup.resident.ktp_photo ? (
+                  <a href={`http://localhost:8000/storage/${selectedGroup.resident.ktp_photo}`} target="_blank" rel="noreferrer" title="Klik untuk memperbesar KTP">
+                    <img
+                      className="w-full aspect-[8/5] rounded-xl object-cover border border-gray-300 shadow-sm hover:ring-2 hover:ring-primary-500 transition-all cursor-pointer"
+                      src={`http://localhost:8000/storage/${selectedGroup.resident.ktp_photo}`}
+                      alt={`KTP ${selectedGroup.resident.name}`}
+                    />
+                  </a>
+                ) : (
+                  <div className="w-full aspect-[8/5] rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex flex-col items-center justify-center font-bold shadow-sm">
+                    <span className="text-4xl mb-2">{selectedGroup.resident.name.charAt(0)}</span>
+                    <span className="text-xs text-indigo-400 font-medium uppercase tracking-wider">No KTP</span>
+                  </div>
+                )}
+              </div>
+              
+              {/* Info & Actions Column */}
+              <div className="md:col-span-8 lg:col-span-9 flex flex-col h-full justify-center gap-4">
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">{selectedGroup.resident.name}</h3>
+                  <div className="flex flex-wrap items-center gap-3 mt-3">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-indigo-100 text-indigo-800 capitalize shadow-sm">
+                      Warga {selectedGroup.resident.resident_type}
+                    </span>
+                    <span className="flex items-center text-sm font-medium text-gray-700 bg-gray-100 px-3 py-1 rounded-full border border-gray-200 shadow-sm">
+                      <svg className="w-4 h-4 mr-1.5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                      {selectedGroup.resident.phone}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Tombol Aksi */}
+                <div className="flex flex-wrap items-center gap-3 mt-2 md:mt-4 pt-4 border-t border-gray-100">
+                  <button
+                    type="button"
+                    onClick={handleGenerateAdvance}
+                    className="text-sm font-medium text-primary-700 hover:text-primary-900 bg-primary-50 px-4 py-2 rounded-lg border border-primary-200 hover:bg-primary-100 transition-colors shadow-sm"
+                  >
+                    Buat Tagihan 1 Tahun
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (selectedBills.length === selectedGroup.bills.length) {
+                        setSelectedBills([]);
+                      } else {
+                        setSelectedBills(selectedGroup.bills.map(b => b.id));
+                      }
+                    }}
+                    className="text-sm font-medium text-gray-700 hover:text-primary-600 bg-white px-4 py-2 rounded-lg border border-gray-300 hover:border-primary-300 transition-colors shadow-sm"
+                  >
+                    {selectedBills.length === selectedGroup.bills.length ? "Batal Semua" : "Pilih Semua"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleCancelPayment}
+                    className="text-sm font-medium text-gray-700 hover:text-rose-600 bg-white px-4 py-2 rounded-lg border border-gray-300 hover:border-rose-300 transition-colors shadow-sm"
+                  >
+                    Tutup Form
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={handleGenerateAdvance}
-                className="text-sm font-medium text-primary-700 hover:text-primary-900 bg-primary-50 px-3 py-1.5 rounded border border-primary-200 hover:bg-primary-100 transition-colors shadow-sm"
-              >
-                Buat Tagihan 1 Tahun
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  if (selectedBills.length === selectedGroup.bills.length) {
-                    setSelectedBills([]);
-                  } else {
-                    setSelectedBills(selectedGroup.bills.map(b => b.id));
-                  }
-                }}
-                className="text-sm font-medium text-gray-700 hover:text-primary-600 bg-white px-3 py-1.5 rounded border border-gray-300 hover:border-primary-300 transition-colors shadow-sm"
-              >
-                {selectedBills.length === selectedGroup.bills.length ? "Batal Semua" : "Pilih Semua"}
-              </button>
-              <button
-                type="button"
-                onClick={handleCancelPayment}
-                className="text-sm font-medium text-gray-700 hover:text-rose-600 bg-white px-3 py-1.5 rounded border border-gray-300 hover:border-rose-300 transition-colors shadow-sm"
-              >
-                Tutup Form
-              </button>
-            </div>
+          </div>
+          <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
+            <p className="text-sm font-medium text-gray-700">Pilih tagihan yang akan dilunasi saat ini:</p>
           </div>
           
           <div className="p-6">
@@ -326,24 +366,7 @@ const PaymentsPage = () => {
                     }`}
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="flex-shrink-0 w-10 h-10">
-                          {group.resident.ktp_photo ? (
-                            <img
-                              className="w-10 h-10 rounded-full object-cover border border-gray-300 shadow-sm"
-                              src={`http://localhost:8000/storage/${group.resident.ktp_photo}`}
-                              alt={`KTP ${group.resident.name}`}
-                            />
-                          ) : (
-                            <div className="w-10 h-10 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-lg">
-                              {group.resident.name.charAt(0)}
-                            </div>
-                          )}
-                        </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-semibold text-gray-900">{group.resident.name}</div>
-                        </div>
-                      </div>
+                      <div className="text-sm font-semibold text-gray-900">{group.resident.name}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-800">
