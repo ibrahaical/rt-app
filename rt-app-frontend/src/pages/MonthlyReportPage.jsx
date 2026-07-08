@@ -118,8 +118,27 @@ const MonthlyReportPage = () => {
                             {new Date(inc.paid_at).toLocaleDateString('id-ID')}
                           </td>
                           <td className="px-6 py-4 text-sm text-gray-900">
-                            <div className="font-medium">{inc.resident?.name || 'Anonim'}</div>
-                            <div className="text-gray-500 text-xs">Rumah: {inc.house?.house_number || '-'}</div>
+                            <div className="font-medium text-base">{inc.resident?.name || 'Anonim'}</div>
+                            <div className="text-gray-500 text-xs mb-1">Rumah: {inc.house?.house_number || '-'}</div>
+                            
+                            {inc.bills && inc.bills.length > 0 && (
+                              <details className="mt-2.5 group">
+                                <summary className="text-xs font-semibold text-blue-600 cursor-pointer select-none hover:text-blue-800 transition-colors list-none flex items-center">
+                                  <span>Rincian {inc.bills.length} Tagihan</span>
+                                  <svg className="w-3.5 h-3.5 ml-1 transform group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                                  </svg>
+                                </summary>
+                                <div className="mt-2 space-y-1.5 pl-3 border-l-2 border-blue-200 py-1 max-h-48 overflow-y-auto custom-scrollbar">
+                                  {inc.bills.map(b => (
+                                    <div key={b.id} className="text-xs flex justify-between items-center gap-4">
+                                      <span className="text-gray-600">{b.fee_type?.name} <span className="text-gray-400">({b.period_month}/{b.period_year})</span></span>
+                                      <span className="font-medium text-gray-800">{formatRp(b.amount)}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </details>
+                            )}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-blue-600 text-right">
                             {formatRp(inc.total_amount)}

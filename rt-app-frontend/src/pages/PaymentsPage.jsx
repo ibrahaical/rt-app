@@ -189,7 +189,7 @@ const PaymentsPage = () => {
 
           {isDropdownOpen && (
             <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-80 flex flex-col overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
-              <div className="p-2 border-b border-gray-100 bg-gray-50 shrink-0">
+              <div className="p-2 border-b border-gray-100 bg-white shrink-0">
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -198,7 +198,7 @@ const PaymentsPage = () => {
                   </div>
                   <input
                     type="text"
-                    className="block w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm transition duration-150 ease-in-out"
+                    className="block w-full pl-9 pr-3 py-2 border-none rounded-md leading-5 bg-gray-50 placeholder-gray-500 focus:outline-none focus:ring-0 focus:bg-gray-100 text-gray-900 sm:text-sm transition-colors"
                     placeholder="Ketik untuk mencari warga..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}

@@ -93,7 +93,7 @@ class ReportController extends Controller
         $month = $request->input('month', now()->month);
         $year = $request->input('year', now()->year);
 
-        $incomes = PaymentTransaction::with(['resident', 'house'])
+        $incomes = PaymentTransaction::with(['resident', 'house', 'bills.feeType'])
             ->whereMonth('paid_at', $month)
             ->whereYear('paid_at', $year)
             ->orderBy('paid_at', 'desc')
